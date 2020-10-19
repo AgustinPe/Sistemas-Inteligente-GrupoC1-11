@@ -1,4 +1,3 @@
-
 public class Celda {
 	
 	private int [] posicion;
