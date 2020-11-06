@@ -1,6 +1,7 @@
 import java.io.*;
 import java.util.*;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class Principal {
 
@@ -14,7 +15,7 @@ public class Principal {
 
 
 			do {
-				System.out.println(" 0. Salir \n 1. Crear y Exportar \n 2. Importar y Dibujar");
+				System.out.println(" 0. Salir \n 1. Crear y Exportar \n 2. Importar y Dibujar \n 3.	ImportarInitial");
 				eleccion = teclado.nextInt();
 				
 				switch (eleccion) {
@@ -43,6 +44,12 @@ public class Principal {
 					System.out.println("Ha sido importado y dibujado correctamente");
 					
 					break;
+					
+				case 3:
+					ImportarJsonInitial cadena = new ImportarJsonInitial();
+					cadena = importarInitial(gson);
+					System.out.println(cadena);
+					
 
 				default:
 					break;
@@ -55,7 +62,9 @@ public class Principal {
 			System.out.println("Semantica incorrecta");
 		} catch (IOException e) {
 			System.out.println("Ha ocurrido un error al crear el archivo Json");
-		} catch (Exception e) {
+		} 
+		
+		catch (Exception e) {
 			System.out.println("Ocurrio un error inesperado" + e);
 		}
 	}
@@ -77,7 +86,7 @@ public class Principal {
 		String jsonlaberinto = gson.toJson(exportarJson);
 
 		FileWriter exportarJson1 = new FileWriter(
-				"D:\\agustin\\Documentos\\Ingenieria Informatica\\CIUDAD REAL\\Reporsitorio GIT\\Sistemas-Inteligente-GrupoC1-11\\Laberinto\\laberinto.json");
+				"D:\\ProgramasDescargados\\eclipse\\eclipse-workspace\\Laberinto1910\\laberinto.json");
 		exportarJson1.write(jsonlaberinto);
 		exportarJson1.flush();
 		exportarJson1.close();
@@ -101,6 +110,25 @@ public class Principal {
 		JsonToObject r = gson.fromJson(json, JsonToObject.class);
 		return r;
 	}
+	
+	public static ImportarJsonInitial importarInitial(Gson gson) throws IOException {
+
+		String jsonInitial = "";
+
+		BufferedReader bri = new BufferedReader(new FileReader("sucesores_10X10.json"));
+
+		String linea;
+		while ((linea = bri.readLine()) != null) {
+
+			jsonInitial += linea;
+		}
+
+		bri.close();
+
+		ImportarJsonInitial iJ = gson.fromJson(jsonInitial, ImportarJsonInitial.class);
+		return iJ;
+	}
+	
 
 	public static Celda[][] importarACeldas(JsonToObject r) throws ExcepcionSemantica {
 
