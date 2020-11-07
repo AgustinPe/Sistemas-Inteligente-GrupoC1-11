@@ -35,10 +35,10 @@ public class Principal {
 					break;
 
 				case 2:
-					JsonToObject objeto = new JsonToObject();
-					objeto = importar(gson);
-					importarACeldas(objeto);
-					DrawLab laberinto1 = new DrawLab(objeto);
+					JsonToObject objeto1 = new JsonToObject();
+					objeto1 = importar(gson);
+					importarACeldas(objeto1);
+					DrawLab laberinto1 = new DrawLab(objeto1);
 					StdDraw.show(0);
 					laberinto1.dibujar();
 					System.out.println("Ha sido importado y dibujado correctamente");
@@ -46,9 +46,13 @@ public class Principal {
 					break;
 					
 				case 3:
-					ImportarJsonInitial cadena = new ImportarJsonInitial();
-					cadena = importarInitial(gson);
-					System.out.println(cadena);
+					String nombreJson;
+					ImportarJsonSucesores cadena = new ImportarJsonSucesores();
+					cadena = importarSucesores(gson);
+					nombreJson = cadena.getMAZE();
+					JsonToObject objeto = new JsonToObject();
+					objeto = importarMaze(gson, nombreJson);
+					
 					
 
 				default:
@@ -93,6 +97,7 @@ public class Principal {
 
 	}
 
+	
 	public static JsonToObject importar(Gson gson) throws IOException {
 
 		String json = "";
@@ -111,21 +116,39 @@ public class Principal {
 		return r;
 	}
 	
-	public static ImportarJsonInitial importarInitial(Gson gson) throws IOException {
+	public static JsonToObject importarMaze(Gson gson, String nombreJson) throws IOException {
 
-		String jsonInitial = "";
+		String json = "";
+
+		BufferedReader br = new BufferedReader(new FileReader(nombreJson));
+
+		String linea;
+		while ((linea = br.readLine()) != null) {
+
+			json += linea;
+		}
+
+		br.close();
+
+		JsonToObject r = gson.fromJson(json, JsonToObject.class);
+		return r;
+	}
+	
+	public static ImportarJsonSucesores importarSucesores(Gson gson) throws IOException {
+
+		String jsonSucesores = "";
 
 		BufferedReader bri = new BufferedReader(new FileReader("sucesores_10X10.json"));
 
 		String linea;
 		while ((linea = bri.readLine()) != null) {
 
-			jsonInitial += linea;
+			jsonSucesores += linea;
 		}
 
 		bri.close();
 
-		ImportarJsonInitial iJ = gson.fromJson(jsonInitial, ImportarJsonInitial.class);
+		ImportarJsonSucesores iJ = gson.fromJson(jsonSucesores, ImportarJsonSucesores.class);
 		return iJ;
 	}
 	
