@@ -9,11 +9,13 @@ public class Frontera {
 	private Nodo inicial;
 	private Estado objetivo;
 	private ArrayList<Nodo> frontera;
-	private ArrayList<int[]> visitados;
+	private ArrayList<Nodo> visitados;
+	private int[] padre;
 	
 	private int fila;
 	private int columna;
 	
+	private int contador;
 	private int columnas;
 	private int filas;
 	private Celda[][] laberinto;
@@ -24,8 +26,8 @@ public class Frontera {
 	public Frontera(ImportarJsonSucesores sucesores, Celda[][] laberinto, JsonToObject json) {
 		String ini = sucesores.getINITIAL();
 		String objetiv = sucesores.getOBJETIVE();
-		
-		
+		this.contador = 0;
+		padre = new int [2];
 		
 		coordenadas(ini);
 		int coor[] = new int[2];
@@ -42,7 +44,7 @@ public class Frontera {
 
 		
 		this.frontera = new ArrayList<Nodo>();
-		this.visitados = new ArrayList<int[]>();
+		this.visitados = new ArrayList<Nodo>();
 		this.laberinto= laberinto;
 		this.columnas = json.cols;
 		this.filas = json.rows;
@@ -75,21 +77,22 @@ public class Frontera {
 	
 
 	
-	public int[] generarNodos() {
+	public Nodo generarNodos() {
 		int[]posicion = new int[2];
 		Random r = new Random();
 		int fila = r.nextInt(this.filas);
 		int columna = r.nextInt(this.columnas);
-		this.laberinto[fila][columna].setVisitada(true);
 		
 		posicion[0] = fila;
 		posicion[1] = columna;
 		
-		return posicion;
+		Nodo nodo = new Nodo(++this.contador, 1, posicion, padre, this.contador, 1, r.nextInt(15));
+		return nodo;
 		
 	}
 	
 	public void objetivo() {
+		Nodo nodo;
 		int[]ini = new int[2];
 		ini = inicial.getId_estado();
 		int[]obj = new int[2];
@@ -97,11 +100,17 @@ public class Frontera {
 		int[]actual = new int[2];
 		this.laberinto[ini[0]][ini[1]].setVisitada(true);
 		
+	do {	
+		do {
+			padre[0] = actual[0];
+			padre[1] = actual[1];
+			nodo = generarNodos();
+			actual = nodo.getId_estado();	
+		}while(this.laberinto[actual[0]][actual[1]].getVisitada() == true);
+		this.laberinto[actual[0]][actual[1]].setVisitada(true);
+		visitados.add(nodo);
 		
-		if(actual[0] != obj[0] && actual[1] != obj[1]  && this.laberinto[actual[0]][actual[1]].getVisitada() == false) {
-			actual = generarNodos();
-		}
-		
+	}while(actual[0] != obj[0] && actual[1] != obj[1]);
 		
 	}
 	
