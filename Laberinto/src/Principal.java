@@ -52,9 +52,8 @@ public class Principal {
 					nombreJson = cadena.getMAZE();
 					JsonToObject objeto = new JsonToObject();
 					objeto = importarMaze(gson, nombreJson);
+					Frontera frontera = new Frontera(cadena, importarACeldas(objeto), objeto );
 					
-					
-
 				default:
 					break;
 
@@ -102,7 +101,7 @@ public class Principal {
 
 		String json = "";
 
-		BufferedReader br = new BufferedReader(new FileReader("laberinto.json"));
+		BufferedReader br = new BufferedReader(new FileReader("puzzle_1020.json"));
 
 		String linea;
 		while ((linea = br.readLine()) != null) {
@@ -193,7 +192,7 @@ public class Principal {
 			laberinto[filasImportado][columnasImportado].setNeighbors(2, celdaj.getNeighbors()[2]);
 			laberinto[filasImportado][columnasImportado].setNeighbors(3, celdaj.getNeighbors()[3]);
 			laberinto[filasImportado][columnasImportado].setValue(celdaj.getValue());
-			laberinto[filasImportado][columnasImportado].setVisitada(true);
+			laberinto[filasImportado][columnasImportado].setVisitada(false);
 			laberinto[filasImportado][columnasImportado].setPosicion(0, filasImportado);
 			laberinto[filasImportado][columnasImportado].setPosicion(1, columnasImportado);
 		}

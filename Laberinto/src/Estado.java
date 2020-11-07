@@ -35,5 +35,10 @@ public class Estado {
 	public void setVisitada(boolean visitada) {
 		this.visitada = visitada;
 	}
-
+	public int[] getId() {
+		return id;
+	}
+	public void setId(int[] id) {
+		this.id = id;
+	}
 }
