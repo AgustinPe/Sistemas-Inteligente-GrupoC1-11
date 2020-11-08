@@ -47,12 +47,16 @@ public class Principal {
 					
 				case 3:
 					String nombreJson;
+					
 					ImportarJsonSucesores cadena = new ImportarJsonSucesores();
 					cadena = importarSucesores(gson);
 					nombreJson = cadena.getMAZE();
 					JsonToObject objeto = new JsonToObject();
 					objeto = importarMaze(gson, nombreJson);
-					Frontera frontera = new Frontera(cadena, importarACeldas(objeto), objeto );
+					
+					Frontera frontera = new Frontera(cadena, importarACeldas(objeto), objeto);	
+					break;
+					
 					
 				default:
 					break;
