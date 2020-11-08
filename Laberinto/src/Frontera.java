@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.TreeMap;
@@ -8,8 +9,8 @@ public class Frontera {
 	
 	private Nodo inicial;
 	private Estado objetivo;
-	private ArrayList<Nodo> frontera;
-	private ArrayList<Nodo> visitados;
+	private List<Nodo> frontera;
+	private List<Nodo> visitados;
 	private int[] padre;
 	
 	private int fila;
@@ -64,7 +65,7 @@ public class Frontera {
 	public void setObjetivo(Estado objetivo) {
 		this.objetivo = objetivo;
 	}
-	public ArrayList<Nodo> getFrontera() {
+	public List<Nodo> getFrontera() {
 		return frontera;
 	}
 	public void setFrontera(ArrayList<Nodo> frontera) {
@@ -73,6 +74,7 @@ public class Frontera {
 
 	public void generarFrontera() {
 		
+        
 	}
 	
 
@@ -153,6 +155,40 @@ public class Frontera {
 				j = aCaracteres.length;
 			}
 		}
+	}
+	
+	public static List<Nodo> ordenar(List<Nodo> ejemploLista) {
+		List<Nodo> ordenada = new ArrayList<Nodo>();
+		boolean entra = false;
+		for (int i = 0; i <= ejemploLista.size() - 1; i++) {
+			if(ordenada.isEmpty()) {				
+				ordenada.add(ejemploLista.get(i));
+				
+			}else {
+				if(ordenada.size() == 1) {
+					
+					if(ejemploLista.get(i).getValor() > ordenada.get(0).getValor()) {
+						
+						ordenada.add(1, ejemploLista.get(i));
+					} else {
+						
+						ordenada.add(0, ejemploLista.get(i));
+					}
+				}else {
+					for (int j = 0; j <= (ordenada.size()-1) && !entra; j++) {
+						
+						if(ejemploLista.get(i).getValor() < ordenada.get(j).getValor()) {
+							ordenada.add(j, ejemploLista.get(i));
+							entra = true;
+						}
+					}
+					if(!entra)
+						ordenada.add(ordenada.size(), ejemploLista.get(i));
+				}
+			}
+			entra=false;
+		}
+		return ordenada;
 	}
 
 }

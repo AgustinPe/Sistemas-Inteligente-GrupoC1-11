@@ -72,6 +72,6 @@ public class Nodo {
 
 	public void setValor(int valor) {
 		this.valor = valor;
-	}
+	} 	
 
 }
