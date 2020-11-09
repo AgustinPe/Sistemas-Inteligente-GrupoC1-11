@@ -56,7 +56,6 @@ public class Frontera {
 		this.frontera = ordenar(visitados);
 		mostrarlista();
 		System.out.println("\n");
-		
 		mostrarlistaOrdenada();
 	}
 
@@ -223,9 +222,6 @@ public class Frontera {
 							entra = true;
 						} else if (ejemploLista.get(i).getValor() == ordenada.get(j).getValor()) {
 							if (primeroMayorQueSegundo(ejemploLista.get(i), ordenada.get(j))) {
-								// ordenada.add(j + 1, ejemploLista.get(i));
-								System.out.println(ordenada.size());
-								System.out.println(j);
 								if (j == ordenada.size() - 1) {
 									ordenada.add(j + 1, ejemploLista.get(i));
 									entra = true;
