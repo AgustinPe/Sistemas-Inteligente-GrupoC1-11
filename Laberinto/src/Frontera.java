@@ -21,6 +21,10 @@ public class Frontera {
 	private int columnas;
 	private int filas;
 	private Celda[][] laberinto;
+	
+	public Frontera() {
+	
+	}
 
 	public Frontera(ImportarJsonSucesores sucesores, Celda[][] laberinto, JsonToObject json) {
 		String ini = sucesores.getINITIAL();
@@ -204,9 +208,9 @@ public class Frontera {
 						ordenada.add(1, ejemploLista.get(i));
 					} else if (ejemploLista.get(i).getValor() < ordenada.get(0).getValor()) {
 						ordenada.add(0, ejemploLista.get(i));
-					} else {
+					} else if (ejemploLista.get(i).getValor() == ordenada.get(0).getValor()) {
 						if (primeroMayorQueSegundo(ejemploLista.get(i), ordenada.get(0))) {
-							ordenada.add(1, ejemploLista.get(i));
+							 ordenada.add(1, ejemploLista.get(i));
 						} else {
 							ordenada.add(0, ejemploLista.get(i));
 						}
@@ -219,11 +223,17 @@ public class Frontera {
 							entra = true;
 						} else if (ejemploLista.get(i).getValor() == ordenada.get(j).getValor()) {
 							if (primeroMayorQueSegundo(ejemploLista.get(i), ordenada.get(j))) {
-								ordenada.add(j + 1, ejemploLista.get(i));
+								// ordenada.add(j + 1, ejemploLista.get(i));
+								System.out.println(ordenada.size());
+								System.out.println(j);
+								if (j == ordenada.size() - 1) {
+									ordenada.add(j + 1, ejemploLista.get(i));
+									entra = true;
+								}
 							} else {
 								ordenada.add(j, ejemploLista.get(i));
+								entra = true;
 							}
-							entra = true;
 						}
 					}
 					if (!entra)
@@ -232,8 +242,7 @@ public class Frontera {
 			}
 			entra = false;
 		}
-		
-		
+
 		return ordenada;
 	}
 

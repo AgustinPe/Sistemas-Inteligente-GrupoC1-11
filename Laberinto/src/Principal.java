@@ -15,7 +15,7 @@ public class Principal {
 
 
 			do {
-				System.out.println(" 0. Salir \n 1. Crear y Exportar \n 2. Importar y Dibujar \n 3.	ImportarInitial");
+				System.out.println(" 0. Salir \n 1. Crear y Exportar \n 2. Importar y Dibujar \n 3.	ImportarInitial \n 4. ListaOrdenar");
 				eleccion = teclado.nextInt();
 				
 				switch (eleccion) {
@@ -46,15 +46,17 @@ public class Principal {
 					break;
 					
 				case 3:
-					String nombreJson;
-					
+					String nombreJson;	
 					ImportarJsonSucesores cadena = new ImportarJsonSucesores();
 					cadena = importarSucesores(gson);
 					nombreJson = cadena.getMAZE();
 					JsonToObject objeto = new JsonToObject();
 					objeto = importarMaze(gson, nombreJson);
+					DrawLab laberinto2 = new DrawLab(objeto);
+					StdDraw.show(0);
+					laberinto2.dibujar();					
+					Frontera frontera = new Frontera(cadena, importarACeldas(objeto), objeto);
 					
-					Frontera frontera = new Frontera(cadena, importarACeldas(objeto), objeto);	
 					break;
 					
 					
