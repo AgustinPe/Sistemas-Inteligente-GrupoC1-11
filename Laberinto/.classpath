@@ -6,7 +6,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="C:/Users/34671/Desktop/Primer cuatrimestre (cuarto)/Sistemas Inteligentes/Prácticas/Entrega 1/Versiones/Librerias/gson-2.6.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/34671/Desktop/Primer cuatrimestre (cuarto)/Sistemas Inteligentes/Prácticas/Entrega 1/Versiones/Librerias/stdlib.jar"/>
+	<classpathentry kind="lib" path="C:/Herramientas eclipse/stdlib.jar"/>
+	<classpathentry kind="lib" path="C:/Herramientas eclipse/gson-2.8.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -11,7 +11,8 @@ public class Frontera {
 	private Estado objetivo;
 	private List<Nodo> frontera;
 	private List<Nodo> visitados;
-	private int[] padre;
+	private ArrayList<int[]> posiciones;
+	private ArrayList<int[]> padre;
 
 	private int fila;
 	private int columna;
@@ -25,7 +26,8 @@ public class Frontera {
 		String ini = sucesores.getINITIAL();
 		String objetiv = sucesores.getOBJETIVE();
 		this.contador = 0;
-		padre = new int[2];
+		this.posiciones = new ArrayList();
+		this.padre = new ArrayList();
 
 		coordenadas(ini);
 		int coor[] = new int[2];
@@ -86,20 +88,27 @@ public class Frontera {
 		this.visitados = visitados;
 	}
 
-	public Nodo generarNodos() {
-		int[] posicion = new int[2];
+	public int[] generarposición() {
+		int[]posicion = new int[2];
 		Random r = new Random();
 		int fila = r.nextInt(this.filas);
 		int columna = r.nextInt(this.columnas);
-
+		
 		posicion[0] = fila;
 		posicion[1] = columna;
-
-		Nodo nodo = new Nodo(++this.contador, 1, posicion, padre, this.contador, 1, r.nextInt(15));
-		return nodo;
-
+		
+		
+		return posicion;
+		
 	}
 	
+	public void generarNodos( ArrayList<int[]> posiciones) {
+		for(int i=0;i<posiciones.size();i++) {
+		Random r = new Random();
+		Nodo nodo = new Nodo(++this.contador, 1, posiciones.get(i) , padre.get(i), this.contador, 1, r.nextInt(15));
+		visitados.add(nodo);
+		}
+	}
 	public void mostrarlista() {
 		for (int i = 0; i <= this.visitados.size() - 1; i++) { 
 			System.out.println("id:" + visitados.get(i).getId()+ " " +visitados.get(i).getValor()+ " " +  visitados.get(i).getId_estado()[0] + " " + visitados.get(i).getId_estado()[1]);
@@ -112,24 +121,32 @@ public class Frontera {
 		}
 	}
 	public void objetivo() {
-		Nodo nodo;
-		int[] ini = new int[2];
+		int[]posicion = new int[2];
+		int[]ini = new int[2];
 		ini = inicial.getId_estado();
-		int[] obj = new int[2];
-		obj = objetivo.getId();
-		int[] actual = new int[2];
+		int[]obj = new int[2];
+		obj=objetivo.getId();
+		int[]actual = new int[2];
 		this.laberinto[ini[0]][ini[1]].setVisitada(true);
-
-		do {
+		int[]padre = new int[2];
+		
+	do {	
+		do {	
 			do {
+				padre = new int[2];
 				padre[0] = actual[0];
 				padre[1] = actual[1];
-				nodo = generarNodos();
-				actual = nodo.getId_estado();
-			} while (this.laberinto[actual[0]][actual[1]].getVisitada() == true);
+				posicion = generarposición();
+				actual = new int[2];
+				actual[0] = posicion[0];
+				actual[1] = posicion[1];
+			}while(this.laberinto[actual[0]][actual[1]].getVisitada() == true);
 			this.laberinto[actual[0]][actual[1]].setVisitada(true);
-			visitados.add(nodo);
-		} while (actual[0] != obj[0] && actual[1] != obj[1]);
+			this.padre.add(padre);
+			this.posiciones.add(actual);
+		}while(actual[0] != obj[0] );
+	}while(actual[1] != obj[1] );
+	generarNodos(posiciones);
 	}
 
 	public void coordenadas(String coordenada) {
