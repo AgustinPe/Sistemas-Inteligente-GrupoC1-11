@@ -21,9 +21,8 @@ public class Frontera {
 	private int columnas;
 	private int filas;
 	private Celda[][] laberinto;
-	
+
 	public Frontera() {
-	
 	}
 
 	public Frontera(ImportarJsonSucesores sucesores, Celda[][] laberinto, JsonToObject json) {
@@ -92,64 +91,67 @@ public class Frontera {
 	}
 
 	public int[] generarposición() {
-		int[]posicion = new int[2];
+		int[] posicion = new int[2];
 		Random r = new Random();
 		int fila = r.nextInt(this.filas);
 		int columna = r.nextInt(this.columnas);
-		
+
 		posicion[0] = fila;
 		posicion[1] = columna;
-		
-		
+
 		return posicion;
-		
+
 	}
-	
-	public void generarNodos( ArrayList<int[]> posiciones) {
-		for(int i=0;i<posiciones.size();i++) {
-		Random r = new Random();
-		Nodo nodo = new Nodo(++this.contador, 1, posiciones.get(i) , padre.get(i), this.contador, 1, r.nextInt(15));
-		visitados.add(nodo);
+
+	public void generarNodos(ArrayList<int[]> posiciones) {
+		for (int i = 0; i < posiciones.size(); i++) {
+			Random r = new Random();
+			Nodo nodo = new Nodo(++this.contador, 1, posiciones.get(i), padre.get(i), this.contador, 1, r.nextInt(15));
+			visitados.add(nodo);
 		}
 	}
+
 	public void mostrarlista() {
-		for (int i = 0; i <= this.visitados.size() - 1; i++) { 
-			System.out.println("id:" + visitados.get(i).getId()+ " " +visitados.get(i).getValor()+ " " +  visitados.get(i).getId_estado()[0] + " " + visitados.get(i).getId_estado()[1]);
+		for (int i = 0; i <= this.visitados.size() - 1; i++) {
+			System.out.println("id:" + visitados.get(i).getId() + " " + visitados.get(i).getValor() + " "
+					+ visitados.get(i).getId_estado()[0] + " " + visitados.get(i).getId_estado()[1]);
 		}
 	}
-	
+
 	public void mostrarlistaOrdenada() {
-		for (int i = 0; i <= this.frontera.size() - 1; i++) { 
-			System.out.println("id:" + frontera.get(i).getId()+ " " +frontera.get(i).getValor()+ " " +  frontera.get(i).getId_estado()[0] + " " + frontera.get(i).getId_estado()[1]);
+		for (int i = 0; i <= this.frontera.size() - 1; i++) {
+			System.out.println("id:" + frontera.get(i).getId() + " " + frontera.get(i).getValor() + " "
+					+ frontera.get(i).getId_estado()[0] + " " + frontera.get(i).getId_estado()[1]);
 		}
 	}
+
 	public void objetivo() {
-		int[]posicion = new int[2];
-		int[]ini = new int[2];
+		int[] posicion = new int[2];
+		int[] ini = new int[2];
 		ini = inicial.getId_estado();
-		int[]obj = new int[2];
-		obj=objetivo.getId();
-		int[]actual = new int[2];
+		int[] obj = new int[2];
+		obj = objetivo.getId();
+		int[] actual = new int[2];
 		this.laberinto[ini[0]][ini[1]].setVisitada(true);
-		int[]padre = new int[2];
-		
-	do {	
-		do {	
+		int[] padre = new int[2];
+
+		do {
 			do {
-				padre = new int[2];
-				padre[0] = actual[0];
-				padre[1] = actual[1];
-				posicion = generarposición();
-				actual = new int[2];
-				actual[0] = posicion[0];
-				actual[1] = posicion[1];
-			}while(this.laberinto[actual[0]][actual[1]].getVisitada() == true);
-			this.laberinto[actual[0]][actual[1]].setVisitada(true);
-			this.padre.add(padre);
-			this.posiciones.add(actual);
-		}while(actual[0] != obj[0] );
-	}while(actual[1] != obj[1] );
-	generarNodos(posiciones);
+				do {
+					padre = new int[2];
+					padre[0] = actual[0];
+					padre[1] = actual[1];
+					posicion = generarposición();
+					actual = new int[2];
+					actual[0] = posicion[0];
+					actual[1] = posicion[1];
+				} while (this.laberinto[actual[0]][actual[1]].getVisitada() == true);
+				this.laberinto[actual[0]][actual[1]].setVisitada(true);
+				this.padre.add(padre);
+				this.posiciones.add(actual);
+			} while (actual[0] != obj[0]);
+		} while (actual[1] != obj[1]);
+		generarNodos(posiciones);
 	}
 
 	public void coordenadas(String coordenada) {
@@ -209,7 +211,7 @@ public class Frontera {
 						ordenada.add(0, ejemploLista.get(i));
 					} else if (ejemploLista.get(i).getValor() == ordenada.get(0).getValor()) {
 						if (primeroMayorQueSegundo(ejemploLista.get(i), ordenada.get(0))) {
-							 ordenada.add(1, ejemploLista.get(i));
+							ordenada.add(1, ejemploLista.get(i));
 						} else {
 							ordenada.add(0, ejemploLista.get(i));
 						}
