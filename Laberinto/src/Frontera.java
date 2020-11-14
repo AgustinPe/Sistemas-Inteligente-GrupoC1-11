@@ -36,7 +36,7 @@ public class Frontera {
 		int coor[] = new int[2];
 		coor[0] = this.fila;
 		coor[1] = this.columna;
-		this.inicial = new Nodo(0, 1, coor, null, 0, 1, 7);
+		this.inicial = new Nodo(0, 1, coor, 0, "", 0, 1, 7);
 
 		coordenadas(objetiv);
 
@@ -106,7 +106,7 @@ public class Frontera {
 	public void generarNodos(ArrayList<int[]> posiciones) {
 		for (int i = 0; i < posiciones.size(); i++) {
 			Random r = new Random();
-			Nodo nodo = new Nodo(++this.contador, 1, posiciones.get(i), padre.get(i), this.contador, 1, r.nextInt(15));
+			Nodo nodo = new Nodo(++this.contador, 1, posiciones.get(i), 4, "e", this.contador, 1, r.nextInt(15));
 			visitados.add(nodo);
 		}
 	}

@@ -15,9 +15,9 @@ public class Principal {
 
 
 			do {
-				System.out.println(" 0. Salir \n 1. Crear y Exportar \n 2. Importar y Dibujar \n 3.	ImportarInitial \n 4. ListaOrdenar");
+				System.out.println(" 0. Salir \n 1. Crear y Exportar \n 2. Importar y Dibujar \n 3.	ImportarInitial \n 4. ListaOrdenar"
+						+ "\n 5. Anchura \n 6. Costo Uniforme \n 7. Profundidad Acotada \n 8. Voraz \n 9. A*");
 				eleccion = teclado.nextInt();
-				
 				switch (eleccion) {
 				case 0:
 					break;
@@ -59,6 +59,35 @@ public class Principal {
 					
 					break;
 					
+				case 4:
+					int m[] = new int[2];
+					m[0] = 1;
+					m[1] = 4;
+					//Nodo n = new Nodo(1, 5, m, 3, "S", 4, 5, 6);
+					Nodo n = new Nodo(1, 5, m, 0, null, 4, 5, 6);
+					System.out.println(n.toString());
+					
+					break;	
+					
+				case 5:
+					
+					
+					break;
+					
+				case 6:
+					
+					
+					break;
+					
+				case 7:
+					
+					
+					break;
+					
+				case 8:
+					
+					
+					break;
 					
 				default:
 					break;
