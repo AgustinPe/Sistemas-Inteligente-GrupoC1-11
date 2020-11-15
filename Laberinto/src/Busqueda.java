@@ -3,7 +3,7 @@ import java.util.PriorityQueue;
 
 public class Busqueda {
 
-	private ArrayList<Nodo> visitados;
+	private ArrayList<int[]> visitados;
 	private Frontera frontera;
 	private String nodoIni;
 	private Nodo nodo;
@@ -15,7 +15,7 @@ public class Busqueda {
 	
 	
 	public Busqueda() {
-		visitados=new ArrayList<Nodo>();
+		visitados=new ArrayList<int[]>();
 		frontera=new Frontera();
 	}
 	public Busqueda(ImportarJsonSucesores sucesores, JsonToObject objeto,Celda[][] laberinto ) {
@@ -43,25 +43,8 @@ public class Busqueda {
 		return h;
 		
 	}
-	public ArrayList<int[]> insertar(){
-//		solución = Falso
-	//
-//		Mientras (frontera no es vacia) y (no hay solución) hacer
-	//
-//		    nodo = frontera.primer_elemento()
-//		    
-//		    Si Problema.objetivo(nodo.estado) entonces
-//		        solución = Verdad
-//		    Sino Si (nodo.estado no está en visitado) y (nodo.profundidad < profundidad) entonces
-//		        insertar nodo.estado en visitados
-//		        lista_de_nodos_hijos = EXPANDIR_NODO(Problema, nodo, estrategia)
-//		        Para cada nodo_hijo en lista_de_nodos hacer
-//		            insertar nodo_hijo en frontera
-//		Si solución entonces
-//		    devolver camino(nodo)
-//		si no
-//		    devolver no hay solución
-			
+	public ArrayList<int[]> insertar(){			
+		
 		boolean solucion = false;
 		ArrayList<Nodo> nodosHijo;
 		
@@ -69,18 +52,33 @@ public class Busqueda {
 			nodo = frontera.eliminar();
 			if(nodo.getId_estado()[0] == this.objetivo[0] && nodo.getId_estado()[1] == this.objetivo[1]) {
 				solucion = true;
-			}else if (nodo.isVisitado()==false && nodo.getProfundidad() < profundidadmax) {
-				visitados.add(nodo);
+			}else if (!pertenece(nodo.getId_estado()) && nodo.getProfundidad() < profundidadmax) {
+				visitados.add(nodo.getId_estado());
 				nodosHijo = expandir_Nodo(nodo);
-				
-			}
-			
-			
-			
+				for(int i=0;i<=nodosHijo.size();i++) {
+					frontera.insertar(nodosHijo.get(i));
+				}
+			}	
 		}while(!this.frontera.estaVacia()  && solucion== false);
-		return null;
+		
+			return null;
+//			Si solución entonces
+//		    	devolver camino(nodo)
+//		    si no
+//		    	devolver no hay solución
 	}
+	public boolean pertenece(int[] x) {
+	boolean pertenece =false;	
 	
+	for(int i=0; i<=visitados.size();i++) {
+		if(visitados.get(i)[0] == x[0]) {
+			if(visitados.get(i)[1] == x[1]) {
+				pertenece= true;
+			}
+		}
+	}
+	return pertenece;
+	}
 	
 	public ArrayList<Nodo> expandir_Nodo(Nodo nodo){
 		ArrayList<Nodo> nodosHijo = new ArrayList<Nodo>();

@@ -10,7 +10,7 @@ public class Nodo {
 	private int heuristica;
 	private int valor;
 	private String accion;
-	private boolean visitado;
+
 	
 	public Nodo(int id, int costo, int[] id_estado, int id_padre, String accion, int profundidad, int heuristica, int valor) {
 		this.id = id;
@@ -21,15 +21,6 @@ public class Nodo {
 		this.profundidad = profundidad;
 		this.heuristica = heuristica;
 		this.valor = valor;
-		this.visitado= false;
-	}
-
-	public boolean isVisitado() {
-		return visitado;
-	}
-
-	public void setVisitado(boolean visitado) {
-		this.visitado = visitado;
 	}
 
 	public int getId() {
