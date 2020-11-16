@@ -5,13 +5,14 @@ public class Busqueda {
 
 	private ArrayList<int[]> visitados;
 	private Frontera frontera;
-	private String nodoIni;
+	private int[] posicionIni;
+	private Nodo nodoInicial;
 	private Nodo nodo;
 	private JsonToObject objeto = new JsonToObject();
 	private int[] objetivo;
 	private int profundidadmax;
 	private Celda[][] laberinto;
-	private int contadorid=0;		
+	private int contadorid=1;		
 	
 	
 	public Busqueda() {
@@ -19,15 +20,20 @@ public class Busqueda {
 		frontera=new Frontera();
 	}
 	public Busqueda(ImportarJsonSucesores sucesores, JsonToObject objeto,Celda[][] laberinto ) {
-		this.nodoIni = sucesores.getINITIAL();
+		DrawLab cor = new DrawLab(objeto);
+		cor.coordenadas(sucesores.getINITIAL());
+		this.posicionIni[0]=cor.getCoordenadaFila();
+		this.posicionIni[1]=cor.getCoordenadaColumna();
+		this.nodoInicial= new Nodo(0, 0, posicionIni, -1, null, 0,  heurística(nodoInicial.getId_estado()),laberinto[posicionIni[0]][posicionIni[1]].getValue());
 		this.nodo= new Nodo(0, 0, null, 0, null, 0, 0,0);
 		this.objeto= objeto;
-		DrawLab cor = new DrawLab(objeto);
 		cor.coordenadas(sucesores.getOBJETIVE());
 		this.objetivo[0]=cor.getCoordenadaFila();
 		this.objetivo[1]=cor.getCoordenadaColumna();
 		this.profundidadmax= 10000000;
 		this.laberinto=laberinto;
+		
+		insertar();
 	}
 	
 	public int heurística(int[] nodo) {
@@ -43,10 +49,12 @@ public class Busqueda {
 		return h;
 		
 	}
-	public ArrayList<int[]> insertar(){			
+	public PriorityQueue<Nodo> insertar(){			
 		
 		boolean solucion = false;
 		ArrayList<Nodo> nodosHijo;
+		PriorityQueue<Nodo> camino = new PriorityQueue<Nodo>();
+		frontera.insertar(nodoInicial);
 		
 		do {
 			nodo = frontera.eliminar();
@@ -54,19 +62,40 @@ public class Busqueda {
 				solucion = true;
 			}else if (!pertenece(nodo.getId_estado()) && nodo.getProfundidad() < profundidadmax) {
 				visitados.add(nodo.getId_estado());
+				frontera.insertarV(nodo);
 				nodosHijo = expandir_Nodo(nodo);
 				for(int i=0;i<=nodosHijo.size();i++) {
 					frontera.insertar(nodosHijo.get(i));
 				}
 			}	
-		}while(!this.frontera.estaVacia()  && solucion== false);
+		}while(!this.frontera.estaVacia()  && solucion == false);
 		
-			return null;
-//			Si solución entonces
-//		    	devolver camino(nodo)
-//		    si no
-//		    	devolver no hay solución
+		
+		if(solucion == true) {
+			camino = damePadres(nodo);
+			return camino;
+		}else return null;
+		
 	}
+	
+	
+	public PriorityQueue<Nodo> damePadres(Nodo fin){
+		PriorityQueue<Nodo> solucion = new PriorityQueue<Nodo>();
+		solucion.add(fin);
+		Nodo actual = new  Nodo(0, 0, null, 0, null, 0, 0,0);
+		
+		do {
+			actual = frontera.eliminarV();
+			if(fin.getId_padre() == actual.getId()) {
+				solucion.add(actual);
+				fin = nodo;
+			}
+		}while(fin.getId() != 0);
+		
+		return solucion;
+	}
+	
+	
 	public boolean pertenece(int[] x) {
 	boolean pertenece =false;	
 	
