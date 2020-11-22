@@ -75,7 +75,7 @@ public class Busqueda {
 					frontera.insertar(nodosHijo.get(i));
 				}
 			}	
-		}while(!this.frontera.estaVacia()  && solucion == false);
+		}while (!this.frontera.estaVacia()  && solucion == false);
 		
 		
 		if(solucion == true) {
