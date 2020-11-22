@@ -1,7 +1,7 @@
 public class Nodo {
 	
 	private long id;
-	private int costo;
+	private float costo;
 	private int[] id_estado;
 	private long id_padre;
 	private int profundidad;
@@ -10,7 +10,7 @@ public class Nodo {
 	private String accion;
 
 	
-	public Nodo(long id, int costo, int[] id_estado, long id_padre, String accion, int profundidad, int heuristica, float valor) {
+	public Nodo(long id, float costo, int[] id_estado, long id_padre, String accion, int profundidad, int heuristica, float valor) {
 		this.id = id;
 		this.costo = costo;
 		this.id_estado = id_estado;
@@ -29,11 +29,11 @@ public class Nodo {
 		this.id = id;
 	}
 
-	public int getCosto() {
+	public float getCosto() {
 		return costo;
 	}
 
-	public void setCosto(int costo) {
+	public void setCosto(float costo) {
 		this.costo = costo;
 	}
 

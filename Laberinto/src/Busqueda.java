@@ -53,16 +53,19 @@ public class Busqueda {
 		return h;
 		
 	}
-	public ArrayList<int[]>busqueda(){			
+	public ArrayList<Sucesor> busqueda(){			
 		
+		ArrayList<Sucesor> sucesores = new ArrayList<Sucesor>();
+		Sucesor sucesor = new Sucesor();
 		boolean solucion = false;
 		ArrayList<Nodo> nodosHijo = new ArrayList<Nodo>();
-		PriorityQueue<Nodo> camino = new PriorityQueue<Nodo>();
 		frontera.insertar(nodoInicial);
 		frontera.insertarV(nodoInicial);
+		sucesor = new Sucesor(null,nodoInicial.getId_estado(),0);
 		
 		do {			
 			nodo = frontera.eliminar();
+			sucesor = new Sucesor( nodo.getAccion(),nodo.getId_estado(),laberinto[nodo.getId_estado()[0]][nodo.getId_estado()[1]].getValue());
 			if(nodo.getId_estado()[0] == this.objetivo[0] && nodo.getId_estado()[1] == this.objetivo[1]) {
 				solucion = true;
 			}else if (!pertenece(nodo.getId_estado()) && nodo.getProfundidad() < profundidadmax) {
@@ -76,7 +79,7 @@ public class Busqueda {
 		}while (!this.frontera.estaVacia()  && solucion == false);
 		
 		
-		return visitados;
+		return sucesores;
 	}
 	
 
