@@ -112,7 +112,7 @@ public class Busqueda {
 							podar = true;
 						}
 					}
-				}
+				} 
 			}
 			else {
 				if(estrategia=="anchura") {
