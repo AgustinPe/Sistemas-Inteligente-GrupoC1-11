@@ -53,7 +53,7 @@ public class Busqueda {
 		return h;
 		
 	}
-	public PriorityQueue<Nodo> busqueda(){			
+	public ArrayList<int[]>busqueda(){			
 		
 		boolean solucion = false;
 		ArrayList<Nodo> nodosHijo = new ArrayList<Nodo>();
@@ -62,10 +62,8 @@ public class Busqueda {
 		frontera.insertarV(nodoInicial);
 		
 		do {			
-			//Estrategia
 			nodo = frontera.eliminar();
-			//
-			if (nodo.getId_estado()[0] == this.objetivo[0] && nodo.getId_estado()[1] == this.objetivo[1]) {
+			if(nodo.getId_estado()[0] == this.objetivo[0] && nodo.getId_estado()[1] == this.objetivo[1]) {
 				solucion = true;
 			}else if (!pertenece(nodo.getId_estado()) && nodo.getProfundidad() < profundidadmax) {
 				visitados.add(nodo.getId_estado());
@@ -78,30 +76,10 @@ public class Busqueda {
 		}while (!this.frontera.estaVacia()  && solucion == false);
 		
 		
-		if(solucion == true) {
-			camino = damePadres(nodo);
-			return camino;
-		}else return null;
-		
+		return visitados;
 	}
 	
-	
-	public PriorityQueue<Nodo> damePadres(Nodo fin){
-		PriorityQueue<Nodo> solucion = new PriorityQueue<Nodo>();
-		solucion.add(fin);
-		Nodo actual = new  Nodo(0, 0, null, 0, null, 0, 0,0);
-		
-		do {
-			actual = frontera.eliminarV();
-			if(fin.getId_padre() == actual.getId()) {
-				solucion.add(actual);
-				fin = nodo;
-			}
-		}while(fin.getId() != 0);
-		
-		return solucion;
-	}
-	
+
 	
 	public boolean pertenece(int[] x) {
 		boolean pertenece = false;
@@ -124,42 +102,38 @@ public class Busqueda {
 		Nodo nodoHijo;
 		int f= nodo.getId_estado()[0];
 		int c= nodo.getId_estado()[1];
-		int[] posicion = new int[2];
+		int[] posicionN = new int[2];
+		int[] posicionS = new int[2];
+		int[] posicionE = new int[2];
+		int[] posicionO = new int[2];
 		
 		
 		if(laberinto[f][c].getNeighbors()[0]) {
-			posicion[0]=f-1;
-			posicion[1]=c;
-			nodoHijo= new Nodo(contadorid++, 0, posicion, nodo.getId(), "N", nodo.getProfundidad()+1, heurística(nodo.getId_estado()),laberinto[f-1][c].getValue());
+			posicionN[0]=f-1;
+			posicionN[1]=c;
+			nodoHijo= new Nodo(contadorid++, 0, posicionN, nodo.getId(), "N", nodo.getProfundidad()+1, heurística(nodo.getId_estado()),laberinto[f-1][c].getValue());
 			nodosHijo.add(nodoHijo);
 		}
 		if(laberinto[f][c].getNeighbors()[1]) {
-			posicion[0]=f;
-			posicion[1]=c+1;
-			nodoHijo= new Nodo(contadorid++, 0, posicion, nodo.getId(), "E", nodo.getProfundidad()+1, heurística(nodo.getId_estado()),laberinto[f][c+1].getValue());
+			posicionE[0]=f;
+			posicionE[1]=c+1;
+			nodoHijo= new Nodo(contadorid++, 0, posicionE, nodo.getId(), "E", nodo.getProfundidad()+1, heurística(nodo.getId_estado()),laberinto[f][c+1].getValue());
 			nodosHijo.add(nodoHijo);
 		}
 		if(laberinto[f][c].getNeighbors()[2]) {
-			posicion[0]=f+1;
-			posicion[1]=c;
-			nodoHijo= new Nodo(contadorid++, 0, posicion, nodo.getId(), "S", nodo.getProfundidad()+1, heurística(nodo.getId_estado()),laberinto[f+1][c].getValue());
+			posicionS[0]=f+1;
+			posicionS[1]=c;
+			nodoHijo= new Nodo(contadorid++, 0, posicionS, nodo.getId(), "S", nodo.getProfundidad()+1, heurística(nodo.getId_estado()),laberinto[f+1][c].getValue());
 			nodosHijo.add(nodoHijo);
 		}
 		if(laberinto[f][c].getNeighbors()[3]) {
-			posicion[0]=f;
-			posicion[1]=c-1;
-			nodoHijo= new Nodo(contadorid++, 0, posicion, nodo.getId(), "O", nodo.getProfundidad()+1, heurística(nodo.getId_estado()),laberinto[f][c-1].getValue());
+			posicionO[0]=f;
+			posicionO[1]=c-1;
+			nodoHijo= new Nodo(contadorid++, 0, posicionO, nodo.getId(), "O", nodo.getProfundidad()+1, heurística(nodo.getId_estado()),laberinto[f][c-1].getValue());
 			nodosHijo.add(nodoHijo);
 		}
 		
 		return nodosHijo;
 		
-	}
-	
-	
-	
-	
-	
-	
-	
+	}	
 }
