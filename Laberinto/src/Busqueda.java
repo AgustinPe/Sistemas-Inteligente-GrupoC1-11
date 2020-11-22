@@ -58,12 +58,19 @@ public class Busqueda {
 	public PriorityQueue<Nodo> busqueda() {
 
 		boolean solucion = false;
-		ArrayList<Nodo> nodosHijo;
+		ArrayList<Nodo> nodosHijo = new ArrayList<Nodo>();
 		PriorityQueue<Nodo> camino = new PriorityQueue<Nodo>();
 		frontera.insertar(nodoInicial);
+<<<<<<< HEAD
 
 		do {
 			// Estrategia
+=======
+		frontera.insertarV(nodoInicial);
+		
+		do {			
+			//Estrategia
+>>>>>>> branch 'Agus' of https://github.com/AgustinPe/Sistemas-Inteligente-GrupoC1-11.git
 			nodo = frontera.eliminar();
 			//
 			if (nodo.getId_estado()[0] == this.objetivo[0] && nodo.getId_estado()[1] == this.objetivo[1]) {
@@ -72,13 +79,25 @@ public class Busqueda {
 				visitados.add(nodo.getId_estado());
 				frontera.insertarV(nodo);
 				nodosHijo = expandir_Nodo(nodo);
+<<<<<<< HEAD
 				for (int i = 0; i <= nodosHijo.size(); i++) {
+=======
+				for(int i=0;i<nodosHijo.size();i++) {
+>>>>>>> branch 'Agus' of https://github.com/AgustinPe/Sistemas-Inteligente-GrupoC1-11.git
 					frontera.insertar(nodosHijo.get(i));
 				}
+<<<<<<< HEAD
 			}
 		} while (!this.frontera.estaVacia() && solucion == false);
 
 		if (solucion == true) {
+=======
+			}	
+		}while (!this.frontera.estaVacia()  && solucion == false);
+		
+		
+		if(solucion == true) {
+>>>>>>> branch 'Agus' of https://github.com/AgustinPe/Sistemas-Inteligente-GrupoC1-11.git
 			camino = damePadres(nodo);
 			return camino;
 		} else
@@ -105,13 +124,16 @@ public class Busqueda {
 	public boolean pertenece(int[] x) {
 		boolean pertenece = false;
 
-		for (int i = 0; i <= visitados.size(); i++) {
-			if (visitados.get(i)[0] == x[0]) {
+		for (int i = 0; i < visitados.size(); i++) {
+			if(visitados.isEmpty()) {
+				i=visitados.size();
+			}
+			else if (visitados.get(i)[0] == x[0]) {
 				if (visitados.get(i)[1] == x[1]) {
 					pertenece = true;
 				}
 			}
-		}
+	}
 		return pertenece;
 	}
 	
