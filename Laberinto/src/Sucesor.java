@@ -1,6 +1,6 @@
 
 public class Sucesor {
-	String move;
+	String accion;
 	int[] estado;
 	int costo_move;
 	
@@ -9,18 +9,17 @@ public class Sucesor {
 		
 	}
 	
-	public Sucesor(String move, int[] estado, int costo_move) {
-		super();
-		this.move = move;
+	public Sucesor(String accion, int[] estado, int costo_move) {
+		this.accion = accion;
 		this.estado = estado;
 		this.costo_move = costo_move;
 	}
 	
 	public String getMove() {
-		return move;
+		return accion;
 	}
-	public void setMove(String move) {
-		this.move = move;
+	public void setMove(String accion) {
+		this.accion = accion;
 	}
 	public int[] getEstado() {
 		return estado;

@@ -56,9 +56,10 @@ public class Busqueda {
 	public PriorityQueue<Nodo> busqueda(){			
 		
 		boolean solucion = false;
-		ArrayList<Nodo> nodosHijo;
+		ArrayList<Nodo> nodosHijo = new ArrayList<Nodo>();
 		PriorityQueue<Nodo> camino = new PriorityQueue<Nodo>();
 		frontera.insertar(nodoInicial);
+		frontera.insertarV(nodoInicial);
 		
 		do {			
 			//Estrategia
@@ -70,7 +71,7 @@ public class Busqueda {
 				visitados.add(nodo.getId_estado());
 				frontera.insertarV(nodo);
 				nodosHijo = expandir_Nodo(nodo);
-				for(int i=0;i<=nodosHijo.size();i++) {
+				for(int i=0;i<nodosHijo.size();i++) {
 					frontera.insertar(nodosHijo.get(i));
 				}
 			}	
@@ -105,13 +106,16 @@ public class Busqueda {
 	public boolean pertenece(int[] x) {
 		boolean pertenece = false;
 
-		for (int i = 0; i <= visitados.size(); i++) {
-			if (visitados.get(i)[0] == x[0]) {
+		for (int i = 0; i < visitados.size(); i++) {
+			if(visitados.isEmpty()) {
+				i=visitados.size();
+			}
+			else if (visitados.get(i)[0] == x[0]) {
 				if (visitados.get(i)[1] == x[1]) {
 					pertenece = true;
 				}
 			}
-		}
+	}
 		return pertenece;
 	}
 	
