@@ -36,7 +36,7 @@ public class Busqueda {
 		this.profundidadmax= 10000000;
 		this.laberinto=laberinto;
 		this.frontera = new Frontera();
-		
+		this.visitados = new ArrayList<int[]>();
 		busqueda();
 	}
 	
@@ -103,16 +103,16 @@ public class Busqueda {
 	
 	
 	public boolean pertenece(int[] x) {
-	boolean pertenece =false;	
-	
-	for(int i=0; i<=visitados.size();i++) {
-		if(visitados.get(i)[0] == x[0]) {
-			if(visitados.get(i)[1] == x[1]) {
-				pertenece= true;
+		boolean pertenece = false;
+
+		for (int i = 0; i <= visitados.size(); i++) {
+			if (visitados.get(i)[0] == x[0]) {
+				if (visitados.get(i)[1] == x[1]) {
+					pertenece = true;
+				}
 			}
 		}
-	}
-	return pertenece;
+		return pertenece;
 	}
 	
 	public ArrayList<Nodo> expandir_Nodo(Nodo nodo){
