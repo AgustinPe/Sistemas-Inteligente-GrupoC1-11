@@ -1,6 +1,6 @@
 import java.util.PriorityQueue;
 
-public class Frontera {
+public class Frontera{
 
 	private PriorityQueue<Nodo> frontera;
 	private PriorityQueue<Nodo> visitados;
