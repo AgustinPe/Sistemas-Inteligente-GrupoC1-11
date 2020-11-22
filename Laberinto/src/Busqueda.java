@@ -61,32 +61,28 @@ public class Busqueda {
 		ArrayList<Nodo> nodosHijo = new ArrayList<Nodo>();
 		PriorityQueue<Nodo> camino = new PriorityQueue<Nodo>();
 		frontera.insertar(nodoInicial);
+		frontera.insertarV(nodoInicial);
 
 		do {
 			// Estrategia
-			frontera.insertarV(nodoInicial);
+			nodo = frontera.eliminar();
+			//
+			if (nodo.getId_estado()[0] == this.objetivo[0] && nodo.getId_estado()[1] == this.objetivo[1]) {
+				solucion = true;
+			} else if (!pertenece(nodo.getId_estado()) && nodo.getProfundidad() < profundidadmax) {
+				visitados.add(nodo.getId_estado());
+				frontera.insertarV(nodo);
+				nodosHijo = expandir_Nodo(nodo);
 
-			do {
-				// Estrategia
-				nodo = frontera.eliminar();
-				//
-				if (nodo.getId_estado()[0] == this.objetivo[0] && nodo.getId_estado()[1] == this.objetivo[1]) {
-					solucion = true;
-				} else if (!pertenece(nodo.getId_estado()) && nodo.getProfundidad() < profundidadmax) {
-					visitados.add(nodo.getId_estado());
-					frontera.insertarV(nodo);
-					nodosHijo = expandir_Nodo(nodo);
-
-					for (int i = 0; i <= nodosHijo.size(); i++) {
-						frontera.insertar(nodosHijo.get(i));
-					}
+				for (int i = 0; i <= nodosHijo.size(); i++) {
+					frontera.insertar(nodosHijo.get(i));
 				}
-			} while (!this.frontera.estaVacia() && solucion == false);
-
-			if (solucion == true) {
-
 			}
 		} while (!this.frontera.estaVacia() && solucion == false);
+
+		if (solucion == true) {
+
+		}
 
 		if (solucion == true) {
 
