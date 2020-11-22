@@ -82,10 +82,6 @@ public class Busqueda {
 
 		if (solucion == true) {
 
-		}
-
-		if (solucion == true) {
-
 			camino = damePadres(nodo);
 			return camino;
 		} else
