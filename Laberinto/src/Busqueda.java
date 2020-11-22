@@ -1,4 +1,6 @@
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.PriorityQueue;
 
 public class Busqueda {
@@ -12,19 +14,20 @@ public class Busqueda {
 	private int[] objetivo;
 	private int profundidadmax;
 	private Celda[][] laberinto;
-	private int contadorid=1;		
+	private long contadorid=1;		
 	
 	
 	public Busqueda() {
-		visitados=new ArrayList<int[]>();
-		frontera=new Frontera();
+		
 	}
 	public Busqueda(ImportarJsonSucesores sucesores, JsonToObject objeto,Celda[][] laberinto ) {
+		this.posicionIni= new int[2];
+		this.objetivo= new int[2];
 		DrawLab cor = new DrawLab(objeto);
 		cor.coordenadas(sucesores.getINITIAL());
 		this.posicionIni[0]=cor.getCoordenadaFila();
 		this.posicionIni[1]=cor.getCoordenadaColumna();
-		this.nodoInicial= new Nodo(0, 0, posicionIni, -1, null, 0,  heurística(nodoInicial.getId_estado()),laberinto[posicionIni[0]][posicionIni[1]].getValue());
+		this.nodoInicial= new Nodo(0, 0, posicionIni, -1, null, 0,  heurística(posicionIni),laberinto[posicionIni[0]][posicionIni[1]].getValue());
 		this.nodo= new Nodo(0, 0, null, 0, null, 0, 0,0);
 		this.objeto= objeto;
 		cor.coordenadas(sucesores.getOBJETIVE());
@@ -32,8 +35,9 @@ public class Busqueda {
 		this.objetivo[1]=cor.getCoordenadaColumna();
 		this.profundidadmax= 10000000;
 		this.laberinto=laberinto;
+		this.frontera = new Frontera();
 		
-		insertar();
+		busqueda();
 	}
 	
 	public int heurística(int[] nodo) {
@@ -49,15 +53,17 @@ public class Busqueda {
 		return h;
 		
 	}
-	public PriorityQueue<Nodo> insertar(){			
+	public PriorityQueue<Nodo> busqueda(){			
 		
 		boolean solucion = false;
 		ArrayList<Nodo> nodosHijo;
 		PriorityQueue<Nodo> camino = new PriorityQueue<Nodo>();
 		frontera.insertar(nodoInicial);
 		
-		do {
+		do {			
+			//Estrategia
 			nodo = frontera.eliminar();
+			//
 			if(nodo.getId_estado()[0] == this.objetivo[0] && nodo.getId_estado()[1] == this.objetivo[1]) {
 				solucion = true;
 			}else if (!pertenece(nodo.getId_estado()) && nodo.getProfundidad() < profundidadmax) {
@@ -145,6 +151,10 @@ public class Busqueda {
 		return nodosHijo;
 		
 	}
+	
+	
+	
+	
 	
 	
 	

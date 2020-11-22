@@ -1,16 +1,16 @@
 public class Nodo {
 	
-	private int id;
+	private long id;
 	private int costo;
 	private int[] id_estado;
-	private int id_padre;
+	private long id_padre;
 	private int profundidad;
 	private int heuristica;
-	private int valor;
+	private float valor;
 	private String accion;
 
 	
-	public Nodo(int id, int costo, int[] id_estado, int id_padre, String accion, int profundidad, int heuristica, int valor) {
+	public Nodo(long id, int costo, int[] id_estado, long id_padre, String accion, int profundidad, int heuristica, float valor) {
 		this.id = id;
 		this.costo = costo;
 		this.id_estado = id_estado;
@@ -21,11 +21,11 @@ public class Nodo {
 		this.valor = valor;
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -45,11 +45,11 @@ public class Nodo {
 		this.id_estado = id_estado;
 	}
 
-	public int getId_padre() {
+	public long getId_padre() {
 		return id_padre;
 	}
 
-	public void setId_padre(int id_padre) {
+	public void setId_padre(long id_padre) {
 		this.id_padre = id_padre;
 	}
 
@@ -69,11 +69,11 @@ public class Nodo {
 		this.heuristica = heuristica;
 	}
 
-	public int getValor() {
+	public float getValor() {
 		return valor;
 	}
 
-	public void setValor(int valor) {
+	public void setValor(float valor) {
 		this.valor = valor;
 	} 	
 

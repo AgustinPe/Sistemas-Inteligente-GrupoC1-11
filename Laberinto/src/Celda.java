@@ -1,7 +1,7 @@
 public class Celda {
 	
 	private int [] posicion;
-	private int value;
+	private float value;
 	private boolean [] neighbors;
 	private boolean visitada;
 	public Celda() {
@@ -16,10 +16,10 @@ public class Celda {
 	public void setPosicion(int coordenada, int posicion) {
 		this.posicion[coordenada] = posicion;
 	}
-	public int getValue() {
+	public float getValue() {
 		return value;
 	}
-	public void setValue(int value) {
+	public void setValue(float value) {
 		this.value = value;
 	}
 	public boolean [] getNeighbors() {

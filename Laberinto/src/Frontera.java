@@ -6,7 +6,8 @@ public class Frontera {
 	private PriorityQueue<Nodo> visitados;
 	
 	public Frontera() {
-		
+		this.frontera = new PriorityQueue<Nodo>();
+		this.visitados= new PriorityQueue<Nodo>();
 	}
 	public Frontera(PriorityQueue<Nodo> frontera, PriorityQueue<Nodo> visitados) {
 		this.frontera = frontera;

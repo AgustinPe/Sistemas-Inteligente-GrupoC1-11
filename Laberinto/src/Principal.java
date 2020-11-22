@@ -55,17 +55,17 @@ public class Principal {
 					DrawLab laberinto2 = new DrawLab(objeto);
 					StdDraw.show(0);
 					laberinto2.dibujar();					
-					Frontera frontera = new Frontera(cadena, importarACeldas(objeto), objeto);
+					
 					
 					break;
 					
 				case 4:
-					int m[] = new int[2];
-					m[0] = 1;
-					m[1] = 4;
-					//Nodo n = new Nodo(1, 5, m, 3, "S", 4, 5, 6);
-					Nodo n = new Nodo(1, 5, m, 0, null, 4, 5, 6);
-					System.out.println(n.toString());
+					ImportarJsonSucesores sucesores = new ImportarJsonSucesores();
+					sucesores = importarSucesores(gson);
+					nombreJson = sucesores.getMAZE();
+					JsonToObject laberinto = new JsonToObject();
+					laberinto = importarMaze(gson, nombreJson);
+					Busqueda frontera = new Busqueda(sucesores,laberinto,  importarACeldas(laberinto));
 					
 					break;	
 					
@@ -102,9 +102,9 @@ public class Principal {
 			System.out.println("Ha ocurrido un error al crear el archivo Json");
 		} 
 		
-		catch (Exception e) {
-			System.out.println("Ocurrio un error inesperado" + e);
-		}
+//		catch (Exception e) {
+//			System.out.println("Ocurrio un error inesperado" + e);
+//		}
 	}
 
 	public static void crearExportar(Scanner teclado, Gson gson) throws IOException {
