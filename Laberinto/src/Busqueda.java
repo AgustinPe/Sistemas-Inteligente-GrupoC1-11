@@ -65,7 +65,7 @@ public class Busqueda {
 			//Estrategia
 			nodo = frontera.eliminar();
 			//
-			if(nodo.getId_estado()[0] == this.objetivo[0] && nodo.getId_estado()[1] == this.objetivo[1]) {
+			if (nodo.getId_estado()[0] == this.objetivo[0] && nodo.getId_estado()[1] == this.objetivo[1]) {
 				solucion = true;
 			}else if (!pertenece(nodo.getId_estado()) && nodo.getProfundidad() < profundidadmax) {
 				visitados.add(nodo.getId_estado());
