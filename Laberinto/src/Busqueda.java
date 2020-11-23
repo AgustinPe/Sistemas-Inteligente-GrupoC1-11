@@ -17,7 +17,6 @@ public class Busqueda {
 	private long contadorid = 1;
 
 	public Busqueda() {
-
 	}
 
 	public Busqueda(ImportarJsonSucesores sucesores, JsonToObject objeto, Celda[][] laberinto) {
@@ -54,8 +53,6 @@ public class Busqueda {
 		return h;
 
 	}
-	
-	
 
 	public PriorityQueue<Nodo> busqueda() {
 
@@ -68,11 +65,12 @@ public class Busqueda {
 		do {
 			// Estrategia
 			nodo = frontera.eliminar();
-			//)
+			// )
 			if (nodo.getId_estado()[0] == this.objetivo[0] && nodo.getId_estado()[1] == this.objetivo[1]) {
 				solucion = true;
-			//} else if (!pertenece(nodo.getId_estado()) && nodo.getProfundidad() < profundidadmax) {
-			} else if ( nodo.getProfundidad() < profundidadmax) {
+				// } else if (!pertenece(nodo.getId_estado()) && nodo.getProfundidad() <
+				// profundidadmax) {
+			} else if (nodo.getProfundidad() < profundidadmax) {
 				visitados.add(nodo.getId_estado());
 				frontera.insertarV(nodo);
 				nodosHijo = expandir_Nodo(nodo);
@@ -91,57 +89,59 @@ public class Busqueda {
 			return null;
 
 	}
-	
-	public ArrayList<Nodo> CreaListaDeNodos (ArrayList<Sucesor> listaSucesores, Nodo nodo, String estrategia, int contador, Map<String, Double> podas, boolean poda) throws NoSuchAlgorithmException{
+
+	public ArrayList<Nodo> CreaListaDeNodos(ArrayList<Sucesor> listaSucesores, Nodo nodo, String estrategia,
+			int contador, Map<String, Double> podas, boolean poda) throws NoSuchAlgorithmException {
 		ArrayList<Nodo> ListaNodos = new ArrayList<Nodo>();
 		Nodo nodoAux;
-		double valor=0;
+		double valor = 0;
 		int prof;
 		boolean podar;
 		double h;
-		for(int i=0; i<listaSucesores.size();i++) {
-			podar=false;
+		for (int i = 0; i < listaSucesores.size(); i++) {
+			podar = false;
 			contador++;
-			prof=nodo.getProfundidad()+1;
-			h=heuristica(listaSucesores.get(i).getEstado());
-			if (estrategia=="profundidad") {
-				valor=(1/(prof+1.0));
-				if(poda==true) {
-					if(podas.containsKey(listaSucesores.get(i).getCubo().md5())){
-						if(podas.get(listaSucesores.get(i).getCubo().md5())>=valor) {
+			prof = nodo.getProfundidad() + 1;
+			h = heuristica(listaSucesores.get(i).getEstado());
+			if (estrategia == "profundidad") {
+				valor = (1 / (prof + 1.0));
+				if (poda == true) {
+					if (podas.containsKey(listaSucesores.get(i).getCubo().md5())) {
+						if (podas.get(listaSucesores.get(i).getCubo().md5()) >= valor) {
 							podar = true;
 						}
 					}
-				} 
-			}
-			else {
-				if(estrategia=="anchura") {
+				}
+			} else {
+				if (estrategia == "anchura") {
 					valor = prof;
-				}			
-				if(estrategia=="voraz") {
+				}
+				if (estrategia == "voraz") {
 					valor = h;
 				}
 				float costo = nodo.getCosto() + listaSucesores.get(i).getCosto_move();
-				if (estrategia=="costeUniforme") {
+				if (estrategia == "costeUniforme") {
 					valor = costo;
 				}
-				if (estrategia=="A") {					
+				if (estrategia == "A") {
 					valor = h + costo;
 				}
-				if(poda==true) {
-					if(podas.containsKey(listaSucesores.get(i).getCubo().md5())){
-						if(podas.get(listaSucesores.get(i).getCubo().md5())<=valor) {
-							podar = true;
-						}
-					}
-				}
+//				if (poda == true) {
+//					if (podas.containsKey(listaSucesores.get(i).getCubo().md5())) {
+//						if (podas.get(listaSucesores.get(i).getCubo().md5()) <= valor) {
+//							podar = true;
+//						}
+//					}
+//				}
 			}
-			if(podar==false) {
-				nodoAux=new Nodo(contador,nodo,listaSucesores.get(i).getCubo(),
-						nodo.getCosto()+listaSucesores.get(i).getCostAcci(),listaSucesores.get(i).getAcci(),prof,h,valor);
+			if (podar == false) {
+				nodoAux = new Nodo(contador, nodo, listaSucesores.get(i).getCubo(),
+						
+						nodo.getCosto() + listaSucesores.get(i).getCostAcci(), listaSucesores.get(i).getAcci(), prof, h,
+						valor);
 				ListaNodos.add(nodoAux);
-				if(poda==true) {
-					podas.put(nodoAux.getCubo().md5(),valor);
+				if (poda == true) {
+					podas.put(nodoAux.getCubo().md5(), valor);
 				}
 			}
 		}
