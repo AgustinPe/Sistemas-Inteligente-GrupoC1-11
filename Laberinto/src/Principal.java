@@ -13,15 +13,15 @@ public class Principal {
 			Gson gson = new Gson();
 			int eleccion = 0;
 			ImportarJsonSucesores sucesores = new ImportarJsonSucesores();
-			JsonToObject objeto = new JsonToObject();
+			JsonToObject objeto = importar(gson);
 			Celda [][] laberinto = importarACeldas(objeto);
 			DrawLab laberintoDibujado;
-			Stack<Nodo> solucion;
+			Stack<Nodo> solucion = new Stack<Nodo>();
 			String nombreJson;
 
 
 			do {
-				System.out.println(" 0. Salir \n 1. Crear y Exportar \n 2. Importar y Dibujar \n 3.	Anchura \n 4. Profundidad Acotada"
+				System.out.println(" 0. Salir \n 1. Crear y Exportar \n 2. Importar y Dibujar \n 3. Anchura \n 4. Profundidad Acotada"
 						+ "\n 5. Coste Uniforme \n 6. Voraz \n 7. A*");
 				eleccion = teclado.nextInt();
 				switch (eleccion) {
@@ -56,7 +56,7 @@ public class Principal {
 					objeto = importarMaze(gson, nombreJson);
 					Busqueda busquedaCamino = new Busqueda(sucesores,objeto,laberinto);
 					solucion = busquedaCamino.busqueda("BREADTH");
-					
+					mostrarCamino(solucion, "BREADTH", objeto);
 
 					break;
 					
@@ -64,19 +64,20 @@ public class Principal {
 					sucesores = importarSucesores(gson);
 					nombreJson = sucesores.getMAZE();
 					objeto = importarMaze(gson, nombreJson);
-					Busqueda frontera = new Busqueda(sucesores,	objeto,  importarACeldas(objeto));
-					
+					Busqueda frontera = new Busqueda(sucesores,	objeto,  importarACeldas(objeto));			
 					break;	
 					
+					
 				case 5:
-					ImportarJsonSucesores sucesoresAnchura = new ImportarJsonSucesores();
-					sucesores = importarSucesores(gson);
-					JsonToObject laberintoAnchura = new JsonToObject();
-					Busqueda busquedaSolucion = new Busqueda(sucesoresAnchura, laberintoAnchura, laberinto);
-					solucion = 
-					
 					break;
-					
+//				case 5:
+//					ImportarJsonSucesores sucesoresAnchura = new ImportarJsonSucesores();
+//					sucesores = importarSucesores(gson);
+//					JsonToObject laberintoAnchura = new JsonToObject();
+//					Busqueda busquedaSolucion = new Busqueda(sucesoresAnchura, laberintoAnchura, laberinto);
+//					solucion = 
+//					
+//					break;
 				case 6:
 					
 					
@@ -215,7 +216,7 @@ public class Principal {
 			}
 		}
 
-		for (Map.Entry<String, CeldaJson> entry : kk.entrySet()) {
+		for (Map.Entry<String, CeldaJson> entry : kk.entrySet()) {			
 			DrawLab cor = new DrawLab(r);
 			String key = entry.getKey();
 			cor.coordenadas(key);
@@ -275,6 +276,7 @@ public class Principal {
 	}
 
 	public static void mostrarCamino(Stack<Nodo> solucion, String estrategia, JsonToObject r) throws IOException {
+		
 		if (!solucion.empty()) {
 			FileWriter escribirFichero;
 			PrintWriter pwriter;
@@ -282,7 +284,7 @@ public class Principal {
 			int columnas = r.getCols();
 			Nodo nodo;
 			long id;
-			float costo;
+			double costo;
 			String accion;
 			int profundidad;
 			double heuristica;

@@ -94,17 +94,17 @@ public class Busqueda {
 			costo = calcularCosto(listaSucesores.get(i), nodo);
 			prof = nodo.getProfundidad() + 1;
 			h = heuristica(listaSucesores.get(i).getEstado());
-			if (estrategia == "profundidad") {
+			if (estrategia == "DEPTH") {
 				value = (1 / (prof + 1.0));
 			} else {
-				if (estrategia == "anchura") {
+				if (estrategia == "BREADTH") {
 					value = prof;
 				}
-				if (estrategia == "voraz") {
+				if (estrategia == "GREEDY") {
 					value = h;
 				}
 				costo = nodo.getCosto() + listaSucesores.get(i).getCosto_move();
-				if (estrategia == "costeUniforme") {
+				if (estrategia == "UNIFORM") {
 					value = costo;
 				}
 				if (estrategia == "A") {
