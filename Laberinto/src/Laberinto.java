@@ -62,7 +62,12 @@ public class Laberinto {
 				this.laberinto[i][j].setNeighbors(1, laberintoAuxiliar[i][j].getNeighbors()[1]);
 				this.laberinto[i][j].setNeighbors(2, laberintoAuxiliar[i][j].getNeighbors()[2]);
 				this.laberinto[i][j].setNeighbors(3, laberintoAuxiliar[i][j].getNeighbors()[3]);
-				this.laberinto[i][j].setValue(0);
+				
+				
+				//this.laberinto[i][j].setValue(0);
+				
+				this.laberinto[i][j].setValue(laberintoAuxiliar[i][j].getValue());
+				
 				this.laberinto[i][j].setVisitada(laberintoAuxiliar[i][j].getVisitada());
 
 			}
@@ -80,7 +85,12 @@ public class Laberinto {
 				laberintoAuxiliar[i][j].setNeighbors(1, this.laberinto[i][j].getNeighbors()[1]);
 				laberintoAuxiliar[i][j].setNeighbors(2, this.laberinto[i][j].getNeighbors()[2]);
 				laberintoAuxiliar[i][j].setNeighbors(3, this.laberinto[i][j].getNeighbors()[3]);
-				laberintoAuxiliar[i][j].setValue(0);
+				
+				
+				//laberintoAuxiliar[i][j].setValue(0);
+				
+				laberintoAuxiliar[i][j].setValue(laberintoAuxiliar[i][j].getValue());
+				
 				laberintoAuxiliar[i][j].setVisitada(this.laberinto[i][j].getVisitada());
 			}
 		}

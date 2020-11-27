@@ -9,6 +9,7 @@ public class DrawLab {
 	TreeMap<String, CeldaJson> celdas;
 	private int coordenadaFila;
 	private int coordenadaColumna;
+	
 
 	public DrawLab(JsonToObject r) {
 

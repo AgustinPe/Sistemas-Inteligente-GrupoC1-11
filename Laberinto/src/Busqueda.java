@@ -10,7 +10,6 @@ public class Busqueda {
 	private Frontera frontera;
 	private int[] posicionIni;
 	private Nodo nodoInicial;
-	//private Nodo nodo;
 	private JsonToObject objeto = new JsonToObject();
 	private int[] objetivo;
 	private int profundidadmax;
@@ -29,7 +28,6 @@ public class Busqueda {
 		this.posicionIni[1] = cor.getCoordenadaColumna();
 		this.nodoInicial = new Nodo(0, 0, posicionIni, -1, null, 0, heuristica(posicionIni),
 				laberinto[posicionIni[0]][posicionIni[1]].getValue());
-		//this.nodo = new Nodo(0, 0, null, 0, null, 0, 0, 0);
 		this.objeto = objeto;
 		cor.coordenadas(sucesores.getOBJETIVE());
 		this.objetivo[0] = cor.getCoordenadaFila();
@@ -38,7 +36,6 @@ public class Busqueda {
 		this.laberinto = laberinto;
 		this.frontera = new Frontera();
 		this.visitados = new ArrayList<Nodo>();
-		busqueda();
 	}
 
 	public int heuristica(int[] nodo) {
@@ -56,7 +53,7 @@ public class Busqueda {
 	}
 
 	public Stack<Nodo> busqueda(String estrategia) {
-		int contador=0;
+		int contador = 0;
 		Nodo nodo;
 		boolean solucion = false;
 		ArrayList<Nodo> nodosHijo = new ArrayList<Nodo>();
@@ -77,7 +74,6 @@ public class Busqueda {
 		} while (!this.frontera.estaVacia() && solucion == false);
 
 		if (solucion == true) {
-			
 			return crearCamino(nodo);
 		} else
 			return null;
@@ -85,7 +81,7 @@ public class Busqueda {
 	}
 
 	public ArrayList<Nodo> CreaListaDeNodos(ArrayList<Sucesor> listaSucesores, Nodo nodo, String estrategia,
-			int contador){
+			int contador) {
 		ArrayList<Nodo> ListaNodos = new ArrayList<Nodo>();
 		Nodo nodoAux;
 		double valor = 0;
@@ -93,21 +89,15 @@ public class Busqueda {
 		boolean podar;
 		float costo;
 		double h;
-		
-		
+
 		for (int i = 0; i < listaSucesores.size(); i++) {
 			podar = false;
 			contador++;
-			buscarPadre(listaSucesores.get(i).g);
+//			buscarPadre(listaSucesores.get(i).get);
 			prof = nodo.getProfundidad() + 1;
 			h = heuristica(listaSucesores.get(i).getEstado());
 			if (estrategia == "profundidad") {
 				valor = (1 / (prof + 1.0));
-//					if (podas.containsKey(listaSucesores.get(i).getCubo().md5())) {
-//						if (podas.get(listaSucesores.get(i).getCubo().md5()) >= valor) {
-//							podar = true;
-//						}
-//					}
 			} else {
 				if (estrategia == "anchura") {
 					valor = prof;
@@ -124,7 +114,7 @@ public class Busqueda {
 				}
 				nodoAux = new Nodo(contador, costo, listaSucesores.get(i).getEstado(), nodo.getId(),
 						listaSucesores.get(i).getAccion(), prof, h, valor);
-				if(!pertenece(nodoAux.getId_estado())) {
+				if (!pertenece(nodoAux.getId_estado())) {
 					ListaNodos.add(nodoAux);
 					this.visitados.add(nodoAux);
 				}
@@ -137,22 +127,22 @@ public class Busqueda {
 		Stack<Nodo> camino = new Stack<Nodo>();
 		camino.add(fin);
 		Nodo actual = buscarPadre(fin.getId_padre());
-		
-		while(actual.getId_padre() != -1) {
+
+		while (actual.getId_padre() != -1) {
 			camino.add(actual);
 			actual = buscarPadre(actual.getId_padre());
 		}
-			
+
 		return camino;
 	}
-	
+
 	public Nodo buscarPadre(long idPadre) {
-		Nodo padre = null;		
-		for(int i=0; i<this.visitados.size(); i++){	
-			if (idPadre == this.visitados.get(i).getId()){
+		Nodo padre = null;
+		for (int i = 0; i < this.visitados.size(); i++) {
+			if (idPadre == this.visitados.get(i).getId()) {
 				padre = this.visitados.get(i);
-			}	
-		}			
+			}
+		}
 		return padre;
 	}
 
@@ -161,7 +151,7 @@ public class Busqueda {
 
 		for (int i = 0; i < visitados.size(); i++) {
 			if (visitados.get(i).getId_estado()[0] == x[0] && visitados.get(i).getId_estado()[1] == x[1]) {
-					pertenece = true;
+				pertenece = true;
 			}
 		}
 		return pertenece;
@@ -203,14 +193,14 @@ public class Busqueda {
 
 	}
 
-		public Nodo calcularCosto(long idPadre) {
-			Nodo padre = null;		
-			for(int i=0; i<this.visitados.size(); i++){	
-				if (idPadre == this.visitados.get(i).getId()){
-					padre = this.visitados.get(i);
-				}	
-			}			
-			return padre;
+	public Nodo calcularCosto(long idPadre) {
+		Nodo padre = null;
+		for (int i = 0; i < this.visitados.size(); i++) {
+			if (idPadre == this.visitados.get(i).getId()) {
+				padre = this.visitados.get(i);
+			}
 		}
+		return padre;
+	}
 
 }

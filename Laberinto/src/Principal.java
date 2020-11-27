@@ -12,11 +12,17 @@ public class Principal {
 			Scanner teclado = new Scanner(System.in);
 			Gson gson = new Gson();
 			int eleccion = 0;
+			ImportarJsonSucesores sucesores = new ImportarJsonSucesores();
+			JsonToObject objeto = new JsonToObject();
+			Celda [][] laberinto = importarACeldas(objeto);
+			DrawLab laberintoDibujado;
+			Stack<Nodo> solucion;
+			String nombreJson;
 
 
 			do {
-				System.out.println(" 0. Salir \n 1. Crear y Exportar \n 2. Importar y Dibujar \n 3.	ImportarInitial \n 4. ListaOrdenar"
-						+ "\n 5. Anchura \n 6. Costo Uniforme \n 7. Profundidad Acotada \n 8. Voraz \n 9. A*");
+				System.out.println(" 0. Salir \n 1. Crear y Exportar \n 2. Importar y Dibujar \n 3.	Anchura \n 4. Profundidad Acotada"
+						+ "\n 5. Coste Uniforme \n 6. Voraz \n 7. A*");
 				eleccion = teclado.nextInt();
 				switch (eleccion) {
 				case 0:
@@ -25,52 +31,49 @@ public class Principal {
 				case 1:
 					crearExportar(teclado, gson);
 					System.out.println("Ha sido exportado en la ruta indicada");
-					JsonToObject objetocreado = new JsonToObject();
-					objetocreado = importar(gson);
-					importarACeldas(objetocreado);
-					DrawLab laberintocreado = new DrawLab(objetocreado);
+					objeto = importar(gson);
+					importarACeldas(objeto);
+					laberintoDibujado = new DrawLab(objeto);
 					StdDraw.show(0);
-					laberintocreado.dibujar();
+					laberintoDibujado.dibujar();
 					
 					break;
 
 				case 2:
-					JsonToObject objeto1 = new JsonToObject();
-					objeto1 = importar(gson);
-					importarACeldas(objeto1);
-					DrawLab laberinto1 = new DrawLab(objeto1);
+
+					objeto = importar(gson);
+					importarACeldas(objeto);
+					laberintoDibujado = new DrawLab(objeto);
 					StdDraw.show(0);
-					laberinto1.dibujar();
+					laberintoDibujado.dibujar();
 					System.out.println("Ha sido importado y dibujado correctamente");
 					
 					break;
 					
-				case 3:
-					String nombreJson;	
-					ImportarJsonSucesores cadena = new ImportarJsonSucesores();
-					cadena = importarSucesores(gson);
-					nombreJson = cadena.getMAZE();
-					JsonToObject objeto = new JsonToObject();
+				case 3: //Anchura 
+					sucesores = importarSucesores(gson);
+					nombreJson = sucesores.getMAZE();
 					objeto = importarMaze(gson, nombreJson);
-					DrawLab laberinto2 = new DrawLab(objeto);
-					StdDraw.show(0);
-					laberinto2.dibujar();					
+					Busqueda busquedaCamino = new Busqueda(sucesores,objeto,laberinto);
+					solucion = busquedaCamino.busqueda("BREADTH");
 					
-					
+
 					break;
 					
 				case 4:
-					ImportarJsonSucesores sucesores = new ImportarJsonSucesores();
 					sucesores = importarSucesores(gson);
 					nombreJson = sucesores.getMAZE();
-					JsonToObject laberinto = new JsonToObject();
-					laberinto = importarMaze(gson, nombreJson);
-					Busqueda frontera = new Busqueda(sucesores,laberinto,  importarACeldas(laberinto));
+					objeto = importarMaze(gson, nombreJson);
+					Busqueda frontera = new Busqueda(sucesores,	objeto,  importarACeldas(objeto));
 					
 					break;	
 					
 				case 5:
-					
+					ImportarJsonSucesores sucesoresAnchura = new ImportarJsonSucesores();
+					sucesores = importarSucesores(gson);
+					JsonToObject laberintoAnchura = new JsonToObject();
+					Busqueda busquedaSolucion = new Busqueda(sucesoresAnchura, laberintoAnchura,  );
+					solucion = 
 					
 					break;
 					
@@ -131,12 +134,11 @@ public class Principal {
 
 	}
 
-	
 	public static JsonToObject importar(Gson gson) throws IOException {
 
 		String json = "";
 
-		BufferedReader br = new BufferedReader(new FileReader("puzzle_1020.json"));
+		BufferedReader br = new BufferedReader(new FileReader("problema_10x10_maze.json"));
 
 		String linea;
 		while ((linea = br.readLine()) != null) {
@@ -186,7 +188,6 @@ public class Principal {
 		return iJ;
 	}
 	
-
 	public static Celda[][] importarACeldas(JsonToObject r) throws ExcepcionSemantica {
 
 		TreeMap<String, CeldaJson> kk = r.getCells();
@@ -272,5 +273,45 @@ public class Principal {
 		}
 		return correcto;
 	}
+
+	public static void mostrarCamino(Stack<Nodo> solucion, String estrategia, JsonToObject r) throws IOException {
+		if (!solucion.empty()) {
+			FileWriter escribirFichero;
+			PrintWriter pwriter;
+			int filas = r.getRows();
+			int columnas = r.getCols();
+			Nodo nodo;
+			long id;
+			float costo;
+			String accion;
+			int profundidad;
+			double heuristica;
+			double value;
+			
+			File ficheroSolucion = new File("solution_"+filas+"X"+columnas+"_" + estrategia + ".txt");
+			ficheroSolucion.delete();
+			escribirFichero = new FileWriter("solution_"+filas+"X"+columnas+"_" + estrategia +".txt", true);
+			pwriter = new PrintWriter(escribirFichero);
+			pwriter.print(estrategia);
+
+			while (!solucion.empty()) {
+				nodo = solucion.pop();
+				id = nodo.getId();
+				accion = nodo.getAccion();
+				costo = nodo.getCosto();
+				profundidad = nodo.getProfundidad();
+				heuristica = nodo.getHeuristica();
+				value=nodo.getValor();
+				System.out.println(nodo.toString());
+				pwriter.print(nodo.toString() + "\n");
+															
+			}
+			
+			pwriter.close();//Mirar
+		} else {
+			System.out.println("No se ha encontrado una solución");
+		}
+	}
+	
 }
 
