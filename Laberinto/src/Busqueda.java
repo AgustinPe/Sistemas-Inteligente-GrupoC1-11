@@ -84,36 +84,34 @@ public class Busqueda {
 			int contador) {
 		ArrayList<Nodo> ListaNodos = new ArrayList<Nodo>();
 		Nodo nodoAux;
-		double valor = 0;
+		double value = 0;
 		int prof;
-		boolean podar;
-		float costo;
+		double costo;
 		double h;
 
 		for (int i = 0; i < listaSucesores.size(); i++) {
-			podar = false;
 			contador++;
-//			buscarPadre(listaSucesores.get(i).get);
+			costo = calcularCosto(listaSucesores.get(i), nodo);
 			prof = nodo.getProfundidad() + 1;
 			h = heuristica(listaSucesores.get(i).getEstado());
 			if (estrategia == "profundidad") {
-				valor = (1 / (prof + 1.0));
+				value = (1 / (prof + 1.0));
 			} else {
 				if (estrategia == "anchura") {
-					valor = prof;
+					value = prof;
 				}
 				if (estrategia == "voraz") {
-					valor = h;
+					value = h;
 				}
 				costo = nodo.getCosto() + listaSucesores.get(i).getCosto_move();
 				if (estrategia == "costeUniforme") {
-					valor = costo;
+					value = costo;
 				}
 				if (estrategia == "A") {
-					valor = h + costo;
+					value = h + costo;
 				}
 				nodoAux = new Nodo(contador, costo, listaSucesores.get(i).getEstado(), nodo.getId(),
-						listaSucesores.get(i).getAccion(), prof, h, valor);
+						listaSucesores.get(i).getAccion(), prof, h, value);
 				if (!pertenece(nodoAux.getId_estado())) {
 					ListaNodos.add(nodoAux);
 					this.visitados.add(nodoAux);
@@ -193,14 +191,19 @@ public class Busqueda {
 
 	}
 
-	public Nodo calcularCosto(long idPadre) {
-		Nodo padre = null;
-		for (int i = 0; i < this.visitados.size(); i++) {
-			if (idPadre == this.visitados.get(i).getId()) {
-				padre = this.visitados.get(i);
+	public double calcularCosto(Sucesor nodo, Nodo nodoPadre) {
+	
+		double costo;
+		costo = nodoPadre.getCosto();
+		
+		for (int i = 0; i < this.laberinto.length; i++) {
+			for (int j = 0; j < this.laberinto[0].length; j++) {
+				if (i == nodo.getEstado()[0] && j == nodo.getEstado()[1]) {
+					costo = costo + this.laberinto[i][j].getValue();
+				}
 			}
 		}
-		return padre;
+		return costo;
 	}
 
 }

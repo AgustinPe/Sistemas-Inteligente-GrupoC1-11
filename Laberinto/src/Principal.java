@@ -72,7 +72,7 @@ public class Principal {
 					ImportarJsonSucesores sucesoresAnchura = new ImportarJsonSucesores();
 					sucesores = importarSucesores(gson);
 					JsonToObject laberintoAnchura = new JsonToObject();
-					Busqueda busquedaSolucion = new Busqueda(sucesoresAnchura, laberintoAnchura,  );
+					Busqueda busquedaSolucion = new Busqueda(sucesoresAnchura, laberintoAnchura, laberinto);
 					solucion = 
 					
 					break;
