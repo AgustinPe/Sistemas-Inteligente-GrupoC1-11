@@ -6,11 +6,11 @@ public class Nodo {
 	private long id_padre;
 	private int profundidad;
 	private double heuristica;
-	private float valor;
+	private double valor;
 	private String accion;
 
 	
-	public Nodo(long id, float costo, int[] id_estado, long id_padre, String accion, int profundidad, double heuristica, float valor) {
+	public Nodo(long id, float costo, int[] id_estado, long id_padre, String accion, int profundidad, double heuristica, double valor) {
 		this.id = id;
 		this.costo = costo;
 		this.id_estado = id_estado;
@@ -69,11 +69,11 @@ public class Nodo {
 		this.heuristica = heuristica;
 	}
 
-	public float getValor() {
+	public double getValor() {
 		return valor;
 	}
 
-	public void setValor(float valor) {
+	public void setValor(double valor) {
 		this.valor = valor;
 	} 	
 

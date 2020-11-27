@@ -15,10 +15,10 @@ public class Sucesor {
 		this.costo_move = costo_move;
 	}
 	
-	public String getMove() {
+	public String getAccion() {
 		return accion;
 	}
-	public void setMove(String accion) {
+	public void setAccion(String accion) { 
 		this.accion = accion;
 	}
 	public int[] getEstado() {
