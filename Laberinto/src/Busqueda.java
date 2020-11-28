@@ -124,7 +124,6 @@ public class Busqueda {
 						listaSucesores.get(i).getAccion(), prof, h, value);
 				if (!pertenece(nodoAux.getId_estado())) {
 					ListaNodos.add(nodoAux);
-					//this.visitados.add(nodoAux);
 				}
 			}
 		}
@@ -135,7 +134,8 @@ public class Busqueda {
 		Stack<Nodo> camino = new Stack<Nodo>();
 		camino.add(fin);
 		Nodo actual = buscarPadre(fin.getId_padre());
-
+		System.out.println("Nodo padre="+" "+ buscarPadre(-1).toString());
+		
 		while (actual.getId_padre() != -1) {
 			camino.add(actual);
 			actual = buscarPadre(actual.getId_padre());
