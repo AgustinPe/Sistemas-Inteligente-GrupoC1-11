@@ -63,7 +63,7 @@ public class Busqueda {
 
 		do {
 			nodo = frontera.eliminar();
-			System.out.println(nodo);
+//			System.out.println(nodo);
 			
 			if (nodo.getId_estado()[0] == this.objetivo[0] && nodo.getId_estado()[1] == this.objetivo[1]) {
 				solucion = true;
@@ -71,7 +71,7 @@ public class Busqueda {
 				visitados.add(nodo);
 				listaSucesores = expandir_Nodo(nodo);
 				for(int i=0; i<listaSucesores.size(); i++) {
-					System.out.print(listaSucesores.get(i).getEstado()[0]+","+listaSucesores.get(i).getEstado()[1]+" - ");
+//					System.out.print(listaSucesores.get(i).getEstado()[0]+","+listaSucesores.get(i).getEstado()[1]+" - ");
 				}
 				System.out.println();
 				nodosHijo = CreaListaDeNodos(listaSucesores, nodo, estrategia, contador);
@@ -80,7 +80,7 @@ public class Busqueda {
 //				}
 				this.frontera.insertarNodosHijo(nodosHijo);			
 			}
-			System.out.println("entra");
+//			System.out.println("entra");
 		} while (!this.frontera.estaVacia() && solucion == false);
 
 		if (solucion == true) {
@@ -202,7 +202,6 @@ public class Busqueda {
 		if (laberinto[f][c].getNeighbors()[3]) {
 			posicionO[0] = f;
 			posicionO[1] = c - 1;
-			System.out.println("fila: "+posicionO[0]+" - columna:"+posicionO[1]);
 			nodoHijo = new Sucesor("O", posicionO, 1);
 			nodosHijo.add(nodoHijo);
 		}
