@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 public class Frontera {
@@ -12,14 +13,19 @@ public class Frontera {
 	}
 	
 	public void insertar(Nodo nodo) {
-		frontera.add(nodo);
+		this.frontera.add(nodo);
 	}
 	public Nodo eliminar() {
-		return frontera.remove();
+		return this.frontera.remove();
 	}
 	
 	public boolean estaVacia() {
-		return frontera.isEmpty();
+		return this.frontera.isEmpty();
 	}
 	
+	public void insertarNodosHijo(ArrayList<Nodo> nodosHijo) {
+		while(!nodosHijo.isEmpty()) {
+			this.frontera.add(nodosHijo.remove(0));
+		}
+	}
 }

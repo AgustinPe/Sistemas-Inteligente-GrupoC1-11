@@ -53,6 +53,7 @@ public class Principal {
 				case 3: //Anchura 
 					sucesores = importarSucesores(gson);
 					nombreJson = sucesores.getMAZE();
+					System.out.println(nombreJson);
 					objeto = importarMaze(gson, nombreJson);
 					Busqueda busquedaCamino = new Busqueda(sucesores,objeto,laberinto);
 					solucion = busquedaCamino.busqueda("BREADTH");
@@ -175,7 +176,7 @@ public class Principal {
 
 		String jsonSucesores = "";
 
-		BufferedReader bri = new BufferedReader(new FileReader("sucesores_10X10.json"));
+		BufferedReader bri = new BufferedReader(new FileReader("problema_10x10.json"));
 
 		String linea;
 		while ((linea = bri.readLine()) != null) {

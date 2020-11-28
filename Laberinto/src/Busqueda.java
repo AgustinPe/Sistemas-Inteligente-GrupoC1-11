@@ -25,14 +25,13 @@ public class Busqueda {
 		DrawLab cor = new DrawLab(objeto);
 		cor.coordenadas(sucesores.getINITIAL());
 		this.posicionIni[0] = cor.getCoordenadaFila();
-		this.posicionIni[1] = cor.getCoordenadaColumna();
-		this.nodoInicial = new Nodo(0, 0, posicionIni, -1, null, 0, heuristica(posicionIni),
-				laberinto[posicionIni[0]][posicionIni[1]].getValue());
+		this.posicionIni[1] = cor.getCoordenadaColumna();	
+		this.nodoInicial = new Nodo(0, 0, posicionIni, -1, null, 0, heuristica(posicionIni), 0);
 		this.objeto = objeto;
 		cor.coordenadas(sucesores.getOBJETIVE());
 		this.objetivo[0] = cor.getCoordenadaFila();
 		this.objetivo[1] = cor.getCoordenadaColumna();
-		this.profundidadmax = 10000000;
+		this.profundidadmax = 1000000;
 		this.laberinto = laberinto;
 		this.frontera = new Frontera();
 		this.visitados = new ArrayList<Nodo>();
@@ -59,23 +58,34 @@ public class Busqueda {
 		ArrayList<Nodo> nodosHijo = new ArrayList<Nodo>();
 		ArrayList<Sucesor> listaSucesores = new ArrayList<Sucesor>();
 		PriorityQueue<Nodo> camino = new PriorityQueue<Nodo>();
-		frontera.insertar(nodoInicial);
-		this.visitados.add(nodoInicial);
+		this.nodoInicial.setValor(calcularValueInicial(estrategia));
+		this.frontera.insertar(this.nodoInicial);
 
 		do {
 			nodo = frontera.eliminar();
+			System.out.println(nodo);
+			
 			if (nodo.getId_estado()[0] == this.objetivo[0] && nodo.getId_estado()[1] == this.objetivo[1]) {
 				solucion = true;
-			} else if (nodo.getProfundidad() < profundidadmax && !pertenece(nodo.getId_estado())) {
+			} else if (nodo.getProfundidad() < profundidadmax && pertenece(nodo.getId_estado()) == false) {
 				visitados.add(nodo);
 				listaSucesores = expandir_Nodo(nodo);
+				for(int i=0; i<listaSucesores.size(); i++) {
+					System.out.print(listaSucesores.get(i).getEstado()[0]+","+listaSucesores.get(i).getEstado()[1]+" - ");
+				}
+				System.out.println();
 				nodosHijo = CreaListaDeNodos(listaSucesores, nodo, estrategia, contador);
+//				for(int i=0; i<nodosHijo.size(); i++) {
+//					System.out.println("Lista hijos"+nodosHijo.get(i));
+//				}
+				this.frontera.insertarNodosHijo(nodosHijo);			
 			}
+			System.out.println("entra");
 		} while (!this.frontera.estaVacia() && solucion == false);
 
 		if (solucion == true) {
 			return crearCamino(nodo);
-		} else
+		} else			
 			return null;
 
 	}
@@ -114,7 +124,7 @@ public class Busqueda {
 						listaSucesores.get(i).getAccion(), prof, h, value);
 				if (!pertenece(nodoAux.getId_estado())) {
 					ListaNodos.add(nodoAux);
-					this.visitados.add(nodoAux);
+					//this.visitados.add(nodoAux);
 				}
 			}
 		}
@@ -160,30 +170,40 @@ public class Busqueda {
 		Sucesor nodoHijo;
 		int f = nodo.getId_estado()[0];
 		int c = nodo.getId_estado()[1];
-		int[] posicion = new int[2];
-
+		int[] posicionN = new int[2];
+		int[] posicionE = new int[2];
+		int[] posicionS = new int[2];
+		int[] posicionO = new int[2];
+		
+		
+//		System.out.println(laberinto[f][c].getNeighbors()[0]);
+//		System.out.println(laberinto[f][c].getNeighbors()[1]);
+//		System.out.println(laberinto[f][c].getNeighbors()[2]);
+//		System.out.println(laberinto[f][c].getNeighbors()[3]);
+		
 		if (laberinto[f][c].getNeighbors()[0]) {
-			posicion[0] = f - 1;
-			posicion[1] = c;
-			nodoHijo = new Sucesor("N", posicion, 1);
+			posicionN[0] = f - 1;
+			posicionN[1] = c;
+			nodoHijo = new Sucesor("N", posicionN, 1);
 			nodosHijo.add(nodoHijo);
 		}
 		if (laberinto[f][c].getNeighbors()[1]) {
-			posicion[0] = f;
-			posicion[1] = c + 1;
-			nodoHijo = new Sucesor("E", posicion, 1);
+			posicionE[0] = f;
+			posicionE[1] = c + 1;
+			nodoHijo = new Sucesor("E", posicionE, 1);
 			nodosHijo.add(nodoHijo);
 		}
 		if (laberinto[f][c].getNeighbors()[2]) {
-			posicion[0] = f + 1;
-			posicion[1] = c;
-			nodoHijo = new Sucesor("S", posicion, 1);
+			posicionS[0] = f + 1;
+			posicionS[1] = c;			
+			nodoHijo = new Sucesor("S", posicionS, 1);
 			nodosHijo.add(nodoHijo);
 		}
 		if (laberinto[f][c].getNeighbors()[3]) {
-			posicion[0] = f;
-			posicion[1] = c - 1;
-			nodoHijo = new Sucesor("O", posicion, 1);
+			posicionO[0] = f;
+			posicionO[1] = c - 1;
+			System.out.println("fila: "+posicionO[0]+" - columna:"+posicionO[1]);
+			nodoHijo = new Sucesor("O", posicionO, 1);
 			nodosHijo.add(nodoHijo);
 		}
 
@@ -195,15 +215,30 @@ public class Busqueda {
 	
 		double costo;
 		costo = nodoPadre.getCosto();
-		
-		for (int i = 0; i < this.laberinto.length; i++) {
-			for (int j = 0; j < this.laberinto[0].length; j++) {
-				if (i == nodo.getEstado()[0] && j == nodo.getEstado()[1]) {
-					costo = costo + this.laberinto[i][j].getValue();
-				}
+		costo = costo + this.laberinto[nodo.getEstado()[0]][nodo.getEstado()[1]].getValue();			
+	
+		return costo;
+	}
+	
+	public double calcularValueInicial(String estrategia) {
+		double valueInicial = 0;
+		if (estrategia == "DEPTH") {
+			valueInicial = (1);
+		} else {
+			if (estrategia == "BREADTH") {
+				valueInicial = 0;
+			}
+			if (estrategia == "GREEDY") {
+				valueInicial = this.nodoInicial.getHeuristica();
+			}
+			if (estrategia == "UNIFORM") {
+				valueInicial = 0;
+			}
+			if (estrategia == "A") {
+				valueInicial = this.nodoInicial.getHeuristica();
 			}
 		}
-		return costo;
+		return valueInicial;
 	}
 
 }
