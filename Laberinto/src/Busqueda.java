@@ -15,14 +15,12 @@ public class Busqueda {
 	private int profundidadmax;
 	private Celda[][] laberinto;
 	private long contadorId;
-//	private double costo;
 
 	public Busqueda() {
 	}
 
 	public Busqueda(ImportarJsonSucesores sucesores, JsonToObject objeto, Celda[][] laberinto) {
 		this.contadorId = 1;
-//		this.costo = 0;
 		this.posicionIni = new int[2];
 		this.objetivo = new int[2];
 		DrawLab cor = new DrawLab(objeto);
@@ -44,7 +42,7 @@ public class Busqueda {
 		int h1;
 		int h2;
 		int h;
-		int filasNodo = nodo[0] + 1 ;
+		int filasNodo = nodo[0] + 1;
 		int columnasNodo = nodo[1] + 1;
 
 		h1 = Math.abs(objeto.getRows() - filasNodo);
@@ -89,16 +87,9 @@ public class Busqueda {
 		double h;
 		double costo;
 
-
 		for (int i = 0; i < listaSucesores.size(); i++) {
-			costo = nodo.getCosto()
-					+ laberinto[nodo.getId_estado()[0]][nodo.getId_estado()[1]].getValue()
+			costo = nodo.getCosto() + laberinto[nodo.getId_estado()[0]][nodo.getId_estado()[1]].getValue()
 					+ listaSucesores.get(i).getCosto_move();
-			System.out.println(listaSucesores.get(i).getEstado()[0] + "," + listaSucesores.get(i).getEstado()[1]
-					+ " -->" + nodo.getCosto() + " ");
-
-//			costo = calcularCosto(listaSucesores.get(i), nodo);
-
 			prof = nodo.getProfundidad() + 1;
 			h = heuristica(listaSucesores.get(i).getEstado());
 			if (estrategia == "DEPTH") {
@@ -111,7 +102,6 @@ public class Busqueda {
 				value = h;
 			}
 
-//				costo = nodo.getCosto() + listaSucesores.get(i).getCosto_move();
 			if (estrategia == "UNIFORM") {
 				value = costo;
 			}
@@ -123,7 +113,8 @@ public class Busqueda {
 			if (!pertenece(nodoAux.getId_estado())) {
 				ListaNodos.add(nodoAux);
 			}
-	}return ListaNodos;
+		}
+		return ListaNodos;
 
 	}
 
