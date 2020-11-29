@@ -90,40 +90,41 @@ public class Busqueda {
 		double costo;
 
 
-
 		for (int i = 0; i < listaSucesores.size(); i++) {
-			costo = nodo.getCosto() + laberinto[listaSucesores.get(i).getEstado()[0]][listaSucesores.get(i).getEstado()[1]].getValue()+listaSucesores.get(i).getCosto_move();
-			System.out.println(listaSucesores.get(i).getEstado()[0] +","+ listaSucesores.get(i).getEstado()[1] + " -->" + nodo.getCosto() + " ");
-			
+			costo = nodo.getCosto()
+					+ laberinto[listaSucesores.get(i).getEstado()[0]][listaSucesores.get(i).getEstado()[1]].getValue()
+					+ listaSucesores.get(i).getCosto_move();
+			System.out.println(listaSucesores.get(i).getEstado()[0] + "," + listaSucesores.get(i).getEstado()[1]
+					+ " -->" + nodo.getCosto() + " ");
+
 //			costo = calcularCosto(listaSucesores.get(i), nodo);
 
 			prof = nodo.getProfundidad() + 1;
 			h = heuristica(listaSucesores.get(i).getEstado());
 			if (estrategia == "DEPTH") {
 				value = (1 / (prof + 1.0));
-			} else {
-				if (estrategia == "BREADTH") {
-					value = prof;
-				}
-				if (estrategia == "GREEDY") {
-					value = h;
-				}
-				
-//				costo = nodo.getCosto() + listaSucesores.get(i).getCosto_move();
-				if (estrategia == "UNIFORM") {
-					value = costo;
-				}
-				if (estrategia == "A") {
-					value = h + costo;
-				}
-				nodoAux = new Nodo(this.contadorId++, costo, listaSucesores.get(i).getEstado(), nodo.getId(),
-						listaSucesores.get(i).getAccion(), prof, h, value);
-				if (!pertenece(nodoAux.getId_estado())) {
-					ListaNodos.add(nodoAux);
-				}
 			}
-		}
-		return ListaNodos;
+			if (estrategia == "BREADTH") {
+				value = prof;
+			}
+			if (estrategia == "GREEDY") {
+				value = h;
+			}
+
+//				costo = nodo.getCosto() + listaSucesores.get(i).getCosto_move();
+			if (estrategia == "UNIFORM") {
+				value = costo;
+			}
+			if (estrategia == "A") {
+				value = h + costo;
+			}
+			nodoAux = new Nodo(this.contadorId++, costo, listaSucesores.get(i).getEstado(), nodo.getId(),
+					listaSucesores.get(i).getAccion(), prof, h, value);
+			if (!pertenece(nodoAux.getId_estado())) {
+				ListaNodos.add(nodoAux);
+			}
+	}return ListaNodos;
+
 	}
 
 	public Stack<Nodo> crearCamino(Nodo fin) {

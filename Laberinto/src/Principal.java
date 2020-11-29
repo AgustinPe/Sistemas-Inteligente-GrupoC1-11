@@ -57,6 +57,10 @@ public class Principal {
 					Busqueda busquedaCaminoAnchura = new Busqueda(sucesores, objeto, laberinto);
 					solucion = busquedaCaminoAnchura.busqueda("BREADTH");
 					mostrarCamino(solucion, "BREADTH", objeto);
+					
+//					for (int i = 0; i < solucion.size(); i++) {
+//						System.out.println(solucion.get(i));
+//					}
 
 					break;
 
@@ -75,9 +79,6 @@ public class Principal {
 					objeto = importarMaze(gson, nombreJson);
 					Busqueda busquedaCaminoCostoUniforme = new Busqueda(sucesores, objeto, laberinto);
 					solucion = busquedaCaminoCostoUniforme.busqueda("UNIFORM");
-//					for (int i = 0; i < solucion.size(); i++) {
-//						System.out.println(solucion.get(i));
-//					}
 					mostrarCamino(solucion,"UNIFORM", objeto);
 
 					break;
