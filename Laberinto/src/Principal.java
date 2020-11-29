@@ -6,7 +6,7 @@ import com.google.gson.GsonBuilder;
 public class Principal {
 
 	public static void main(String[] args) {
-  
+
 		try {
 
 			Scanner teclado = new Scanner(System.in);
@@ -14,20 +14,20 @@ public class Principal {
 			int eleccion = 0;
 			ImportarJsonSucesores sucesores = new ImportarJsonSucesores();
 			JsonToObject objeto = importar(gson);
-			Celda [][] laberinto = importarACeldas(objeto);
+			Celda[][] laberinto = importarACeldas(objeto);
 			DrawLab laberintoDibujado;
 			Stack<Nodo> solucion = new Stack<Nodo>();
 			String nombreJson;
 
-
 			do {
-				System.out.println(" 0. Salir \n 1. Crear y Exportar \n 2. Importar y Dibujar \n 3. Anchura \n 4. Profundidad Acotada"
-						+ "\n 5. Coste Uniforme \n 6. Voraz \n 7. A*");
+				System.out.println(
+						" 0. Salir \n 1. Crear y Exportar \n 2. Importar y Dibujar \n 3. Anchura \n 4. Profundidad Acotada"
+								+ "\n 5. Coste Uniforme \n 6. Voraz \n 7. A*");
 				eleccion = teclado.nextInt();
 				switch (eleccion) {
 				case 0:
 					break;
-				
+
 				case 1:
 					crearExportar(teclado, gson);
 					System.out.println("Ha sido exportado en la ruta indicada");
@@ -36,7 +36,7 @@ public class Principal {
 					laberintoDibujado = new DrawLab(objeto);
 					StdDraw.show(0);
 					laberintoDibujado.dibujar();
-					
+
 					break;
 
 				case 2:
@@ -47,16 +47,16 @@ public class Principal {
 					StdDraw.show(0);
 					laberintoDibujado.dibujar();
 					System.out.println("Ha sido importado y dibujado correctamente");
-					
+
 					break;
-					
-				case 3: //Anchura 
+
+				case 3: // Anchura
 					sucesores = importarSucesores(gson);
 					nombreJson = sucesores.getMAZE();
 					objeto = importarMaze(gson, nombreJson);
-					Busqueda busquedaCamino = new Busqueda(sucesores,objeto,laberinto);
+					Busqueda busquedaCamino = new Busqueda(sucesores, objeto, laberinto);
 					solucion = busquedaCamino.busqueda("BREADTH");
-					
+
 					for (int i = 0; i < solucion.size(); i++) {
 						System.out.println(solucion.get(i));
 					}
@@ -64,15 +64,14 @@ public class Principal {
 					mostrarCamino(solucion, "BREADTH", objeto);
 
 					break;
-					
+
 				case 4:
 					sucesores = importarSucesores(gson);
 					nombreJson = sucesores.getMAZE();
 					objeto = importarMaze(gson, nombreJson);
-					Busqueda frontera = new Busqueda(sucesores,	objeto,  importarACeldas(objeto));			
-					break;	
-					
-					
+					Busqueda frontera = new Busqueda(sucesores, objeto, importarACeldas(objeto));
+					break;
+
 				case 5:
 					break;
 //				case 5:
@@ -84,33 +83,30 @@ public class Principal {
 //					
 //					break;
 				case 6:
-					
-					
+
 					break;
-					
+
 				case 7:
-					
-					
+
 					break;
-					
+
 				case 8:
-					
-					
+
 					break;
-					
+
 				default:
 					break;
 
 				}
 
-			} while (eleccion!=0);
-			
+			} while (eleccion != 0);
+
 		} catch (ExcepcionSemantica e) {
 			System.out.println("Semantica incorrecta");
 		} catch (IOException e) {
 			System.out.println("Ha ocurrido un error al crear el archivo Json");
-		} 
-		
+		}
+
 //		catch (Exception e) {
 //			System.out.println("Ocurrio un error inesperado" + e);
 //		}
@@ -157,7 +153,7 @@ public class Principal {
 		JsonToObject r = gson.fromJson(json, JsonToObject.class);
 		return r;
 	}
-	
+
 	public static JsonToObject importarMaze(Gson gson, String nombreJson) throws IOException {
 
 		String json = "";
@@ -175,7 +171,7 @@ public class Principal {
 		JsonToObject r = gson.fromJson(json, JsonToObject.class);
 		return r;
 	}
-	
+
 	public static ImportarJsonSucesores importarSucesores(Gson gson) throws IOException {
 
 		String jsonSucesores = "";
@@ -193,7 +189,7 @@ public class Principal {
 		ImportarJsonSucesores iJ = gson.fromJson(jsonSucesores, ImportarJsonSucesores.class);
 		return iJ;
 	}
-	
+
 	public static Celda[][] importarACeldas(JsonToObject r) throws ExcepcionSemantica {
 
 		TreeMap<String, CeldaJson> kk = r.getCells();
@@ -221,7 +217,7 @@ public class Principal {
 			}
 		}
 
-		for (Map.Entry<String, CeldaJson> entry : kk.entrySet()) {			
+		for (Map.Entry<String, CeldaJson> entry : kk.entrySet()) {
 			DrawLab cor = new DrawLab(r);
 			String key = entry.getKey();
 			cor.coordenadas(key);
@@ -246,9 +242,9 @@ public class Principal {
 		}
 
 		if (!semantica) {
-			
-			throw new ExcepcionSemantica("La sem�ntica es incorrecta");	
-			
+
+			throw new ExcepcionSemantica("La sem�ntica es incorrecta");
+
 		}
 
 		return laberinto;
@@ -281,7 +277,7 @@ public class Principal {
 	}
 
 	public static void mostrarCamino(Stack<Nodo> solucion, String estrategia, JsonToObject r) throws IOException {
-		
+
 		if (!solucion.empty()) {
 			FileWriter escribirFichero;
 			PrintWriter pwriter;
@@ -294,12 +290,12 @@ public class Principal {
 			int profundidad;
 			double heuristica;
 			double value;
-			
-			File ficheroSolucion = new File("solution_"+filas+"X"+columnas+"_" + estrategia + ".txt");
+
+			File ficheroSolucion = new File("solution_" + filas + "X" + columnas + "_" + estrategia + ".txt");
 			ficheroSolucion.delete();
-			escribirFichero = new FileWriter("solution_"+filas+"X"+columnas+"_" + estrategia +".txt", true);
+			escribirFichero = new FileWriter("solution_" + filas + "X" + columnas + "_" + estrategia + ".txt", true);
 			pwriter = new PrintWriter(escribirFichero);
-			pwriter.print(estrategia+ "\n");
+			pwriter.print(estrategia + "\n");
 
 			while (!solucion.empty()) {
 				nodo = solucion.pop();
@@ -308,14 +304,13 @@ public class Principal {
 				costo = nodo.getCosto();
 				profundidad = nodo.getProfundidad();
 				heuristica = nodo.getHeuristica();
-				value=nodo.getValor();
-				pwriter.print(nodo.toString() + "\n");											
-			}	
-			pwriter.close();//Mirar
+				value = nodo.getValor();
+				pwriter.print(nodo.toString() + "\n");
+			}
+			pwriter.close();// Mirar
 		} else {
 			System.out.println("No se ha encontrado una soluci�n");
 		}
 	}
-	
-}
 
+}

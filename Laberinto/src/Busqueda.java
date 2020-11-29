@@ -25,12 +25,14 @@ public class Busqueda {
 		DrawLab cor = new DrawLab(objeto);
 		cor.coordenadas(sucesores.getINITIAL());
 		this.posicionIni[0] = cor.getCoordenadaFila();
-		this.posicionIni[1] = cor.getCoordenadaColumna();	
-		this.nodoInicial = new Nodo(0, 0, posicionIni, -1, null, 0, heuristica(posicionIni), 0);
-		this.objeto = objeto;
+		this.posicionIni[1] = cor.getCoordenadaColumna();
 		cor.coordenadas(sucesores.getOBJETIVE());
 		this.objetivo[0] = cor.getCoordenadaFila();
 		this.objetivo[1] = cor.getCoordenadaColumna();
+		System.out.println(this.objetivo[0]);
+		System.out.println(this.objetivo[1]);
+		this.objeto = objeto;
+		this.nodoInicial = new Nodo(0, 0, this.posicionIni, -1, null, 0, heuristica(this.posicionIni), 0);
 		this.profundidadmax = 1000000;
 		this.laberinto = laberinto;
 		this.frontera = new Frontera();
@@ -41,8 +43,8 @@ public class Busqueda {
 		int h1;
 		int h2;
 		int h;
-		int filasNodo = nodo[0];
-		int columnasNodo = nodo[1];
+		int filasNodo = nodo[0] + 1 ;
+		int columnasNodo = nodo[1] + 1;
 
 		h1 = Math.abs(objeto.getRows() - filasNodo);
 		h2 = Math.abs(objeto.getCols() - columnasNodo);
@@ -61,20 +63,20 @@ public class Busqueda {
 
 		do {
 			nodo = frontera.eliminar();
-			
+
 			if (nodo.getId_estado()[0] == this.objetivo[0] && nodo.getId_estado()[1] == this.objetivo[1]) {
 				solucion = true;
 			} else if (nodo.getProfundidad() < profundidadmax && pertenece(nodo.getId_estado()) == false) {
 				visitados.add(nodo);
 				listaSucesores = expandir_Nodo(nodo);
 				nodosHijo = CreaListaDeNodos(listaSucesores, nodo, estrategia);
-				this.frontera.insertarNodosHijo(nodosHijo);			
+				this.frontera.insertarNodosHijo(nodosHijo);
 			}
 		} while (!this.frontera.estaVacia() && solucion == false);
 
 		if (solucion == true) {
 			return crearCamino(nodo);
-		} else			
+		} else
 			return null;
 
 	}
@@ -160,8 +162,7 @@ public class Busqueda {
 		int[] posicionE = new int[2];
 		int[] posicionS = new int[2];
 		int[] posicionO = new int[2];
-		
-		
+
 		if (laberinto[f][c].getNeighbors()[0]) {
 			posicionN[0] = f - 1;
 			posicionN[1] = c;
@@ -176,7 +177,7 @@ public class Busqueda {
 		}
 		if (laberinto[f][c].getNeighbors()[2]) {
 			posicionS[0] = f + 1;
-			posicionS[1] = c;			
+			posicionS[1] = c;
 			nodoHijo = new Sucesor("S", posicionS, 1);
 			nodosHijo.add(nodoHijo);
 		}
@@ -192,14 +193,14 @@ public class Busqueda {
 	}
 
 	public double calcularCosto(Sucesor nodo, Nodo nodoPadre) {
-	
+
 		double costo;
 		costo = nodoPadre.getCosto();
-		costo = costo + this.laberinto[nodo.getEstado()[0]][nodo.getEstado()[1]].getValue();			
-	
+		costo = costo + this.laberinto[nodo.getEstado()[0]][nodo.getEstado()[1]].getValue();
+
 		return costo;
 	}
-	
+
 	public double calcularValueInicial(String estrategia) {
 		double valueInicial = 0;
 		if (estrategia == "DEPTH") {
