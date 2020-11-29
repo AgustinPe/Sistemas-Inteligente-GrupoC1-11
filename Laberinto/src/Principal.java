@@ -299,7 +299,7 @@ public class Principal {
 			ficheroSolucion.delete();
 			escribirFichero = new FileWriter("solution_"+filas+"X"+columnas+"_" + estrategia +".txt", true);
 			pwriter = new PrintWriter(escribirFichero);
-			pwriter.print(estrategia);
+			pwriter.print(estrategia+ "\n");
 
 			while (!solucion.empty()) {
 				nodo = solucion.pop();
