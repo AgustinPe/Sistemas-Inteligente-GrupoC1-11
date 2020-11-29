@@ -41,11 +41,11 @@ public class Busqueda {
 		int h1;
 		int h2;
 		int h;
-		int filasImportado = nodo[0];
-		int columnasImportado = nodo[1];
+		int filasNodo = nodo[0];
+		int columnasNodo = nodo[1];
 
-		h1 = Math.abs(objeto.getRows() - filasImportado);
-		h2 = Math.abs(objeto.getCols() - columnasImportado);
+		h1 = Math.abs(objeto.getRows() - filasNodo);
+		h2 = Math.abs(objeto.getCols() - columnasNodo);
 		h = h1 + h2;
 		return h;
 	}
@@ -88,7 +88,7 @@ public class Busqueda {
 		double h;
 
 		for (int i = 0; i < listaSucesores.size(); i++) {
-			this.contadorId++;
+
 			costo = calcularCosto(listaSucesores.get(i), nodo);
 			prof = nodo.getProfundidad() + 1;
 			h = heuristica(listaSucesores.get(i).getEstado());
@@ -108,7 +108,7 @@ public class Busqueda {
 				if (estrategia == "A") {
 					value = h + costo;
 				}
-				nodoAux = new Nodo(this.contadorId, costo, listaSucesores.get(i).getEstado(), nodo.getId(),
+				nodoAux = new Nodo(this.contadorId++, costo, listaSucesores.get(i).getEstado(), nodo.getId(),
 						listaSucesores.get(i).getAccion(), prof, h, value);
 				if (!pertenece(nodoAux.getId_estado())) {
 					ListaNodos.add(nodoAux);
@@ -126,7 +126,7 @@ public class Busqueda {
 			camino.add(actual);
 			actual = buscarPadre(actual.getId_padre());
 		}
-
+		camino.add(actual);
 		return camino;
 	}
 
@@ -203,7 +203,7 @@ public class Busqueda {
 	public double calcularValueInicial(String estrategia) {
 		double valueInicial = 0;
 		if (estrategia == "DEPTH") {
-			valueInicial = (1);
+			valueInicial = 1;
 		} else {
 			if (estrategia == "BREADTH") {
 				valueInicial = 0;
