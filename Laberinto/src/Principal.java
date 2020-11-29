@@ -58,7 +58,7 @@ public class Principal {
 					solucion = busquedaCamino.busqueda("BREADTH");
 					
 					for (int i = 0; i < solucion.size(); i++) {
-						System.out.println(solucion.pop());
+						System.out.println(solucion.get(i));
 					}
 
 					mostrarCamino(solucion, "BREADTH", objeto);
@@ -309,11 +309,8 @@ public class Principal {
 				profundidad = nodo.getProfundidad();
 				heuristica = nodo.getHeuristica();
 				value=nodo.getValor();
-				System.out.println(nodo.toString());
-				pwriter.print(nodo.toString() + "\n");
-															
-			}
-			
+				pwriter.print(nodo.toString() + "\n");											
+			}	
 			pwriter.close();//Mirar
 		} else {
 			System.out.println("No se ha encontrado una soluci�n");

@@ -61,30 +61,18 @@ public class Busqueda {
 
 		do {
 			nodo = frontera.eliminar();
-//			System.out.println(nodo);
 			
 			if (nodo.getId_estado()[0] == this.objetivo[0] && nodo.getId_estado()[1] == this.objetivo[1]) {
 				solucion = true;
 			} else if (nodo.getProfundidad() < profundidadmax && pertenece(nodo.getId_estado()) == false) {
 				visitados.add(nodo);
 				listaSucesores = expandir_Nodo(nodo);
-				for(int i=0; i<listaSucesores.size(); i++) {
-//					System.out.print(listaSucesores.get(i).getEstado()[0]+","+listaSucesores.get(i).getEstado()[1]+" - ");
-				}
-				System.out.println();
 				nodosHijo = CreaListaDeNodos(listaSucesores, nodo, estrategia);
-//				for(int i=0; i<nodosHijo.size(); i++) {
-//					System.out.println("Lista hijos"+nodosHijo.get(i));
-//				}
 				this.frontera.insertarNodosHijo(nodosHijo);			
 			}
-//			System.out.println("entra");
 		} while (!this.frontera.estaVacia() && solucion == false);
 
 		if (solucion == true) {
-			for (int i = 0; i < visitados.size(); i++) {
-				System.out.println(visitados.get(i));
-			}
 			return crearCamino(nodo);
 		} else			
 			return null;
@@ -133,16 +121,10 @@ public class Busqueda {
 	public Stack<Nodo> crearCamino(Nodo fin) {
 		Stack<Nodo> camino = new Stack<Nodo>();
 		camino.add(fin);
-//		System.out.println(fin);
 		Nodo actual = buscarPadre(fin.getId_padre());
-//		System.out.println("nodo actual fuera"+ actual);
-//		System.out.println("Nodo padre="+" "+ buscarPadre(-1));
-		
-		
 		while (actual.getId_padre() != -1) {
 			camino.add(actual);
 			actual = buscarPadre(actual.getId_padre());
-//			System.out.println("nodo actual bucle"+ actual);
 		}
 
 		return camino;
@@ -179,11 +161,6 @@ public class Busqueda {
 		int[] posicionS = new int[2];
 		int[] posicionO = new int[2];
 		
-		
-//		System.out.println(laberinto[f][c].getNeighbors()[0]);
-//		System.out.println(laberinto[f][c].getNeighbors()[1]);
-//		System.out.println(laberinto[f][c].getNeighbors()[2]);
-//		System.out.println(laberinto[f][c].getNeighbors()[3]);
 		
 		if (laberinto[f][c].getNeighbors()[0]) {
 			posicionN[0] = f - 1;
