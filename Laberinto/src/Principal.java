@@ -34,7 +34,6 @@ public class Principal {
 					objeto = importar(gson);
 					importarACeldas(objeto);
 					laberintoDibujado = new DrawLab(objeto);
-					StdDraw.show(0);
 					laberintoDibujado.dibujar();
 
 					break;
@@ -43,7 +42,6 @@ public class Principal {
 					objeto = importar(gson);
 					importarACeldas(objeto);
 					laberintoDibujado = new DrawLab(objeto);
-					StdDraw.show(0);
 					laberintoDibujado.dibujar();
 					System.out.println("Ha sido importado y dibujado correctamente");
 					break;
@@ -53,7 +51,6 @@ public class Principal {
 					nombreJson = sucesores.getMAZE();
 					objeto = importarMaze(gson, nombreJson);
 					laberintoDibujado = new DrawLab(objeto);
-					StdDraw.show(0);
 					laberintoDibujado.dibujar();
 					Busqueda busquedaCaminoAnchura = new Busqueda(sucesores, objeto, laberinto);
 					solucion = busquedaCaminoAnchura.busqueda("BREADTH");
@@ -65,7 +62,6 @@ public class Principal {
 					nombreJson = sucesores.getMAZE();
 					objeto = importarMaze(gson, nombreJson);
 					laberintoDibujado = new DrawLab(objeto);
-					StdDraw.show(0);
 					laberintoDibujado.dibujar();
 					Busqueda busquedaCaminoProfundidad = new Busqueda(sucesores, objeto, laberinto);
 					solucion = busquedaCaminoProfundidad.busqueda("DEPTH");
@@ -77,7 +73,6 @@ public class Principal {
 					nombreJson = sucesores.getMAZE();
 					objeto = importarMaze(gson, nombreJson);
 					laberintoDibujado = new DrawLab(objeto);
-					StdDraw.show(0);
 					laberintoDibujado.dibujar();
 					Busqueda busquedaCaminoCostoUniforme = new Busqueda(sucesores, objeto, laberinto);
 					solucion = busquedaCaminoCostoUniforme.busqueda("UNIFORM");
@@ -89,7 +84,6 @@ public class Principal {
 					nombreJson = sucesores.getMAZE();
 					objeto = importarMaze(gson, nombreJson);
 					laberintoDibujado = new DrawLab(objeto);
-					StdDraw.show(0);
 					laberintoDibujado.dibujar();
 					Busqueda busquedaCaminoA = new Busqueda(sucesores, objeto, laberinto);
 					solucion = busquedaCaminoA.busqueda("A");
@@ -101,7 +95,6 @@ public class Principal {
 					nombreJson = sucesores.getMAZE();
 					objeto = importarMaze(gson, nombreJson);
 					laberintoDibujado = new DrawLab(objeto);
-					StdDraw.show(0);
 					laberintoDibujado.dibujar();
 					Busqueda busquedaCaminoVoraz = new Busqueda(sucesores, objeto, laberinto);
 					solucion = busquedaCaminoVoraz.busqueda("GREEDY");
@@ -143,7 +136,7 @@ public class Principal {
 		String jsonlaberinto = gson.toJson(exportarJson);
 
 		FileWriter exportarJson1 = new FileWriter(
-				"C:\\Users\\elpel\\Desktop\\FullUniversidad\\PrimerCuatri\\Iso2\\Practicas\\PruebasGit\\Sistemas-Inteligente-GrupoC1-11\\Laberinto\\problema_10x10_maze.json");
+				"C:\\Users\\elpel\\Desktop\\FullUniversidad\\PrimerCuatri\\Iso2\\Practicas\\PruebasGit\\Sistemas-Inteligente-GrupoC1-11\\Laberinto\\laberinto.json");
 		exportarJson1.write(jsonlaberinto);
 		exportarJson1.flush();
 		exportarJson1.close();
@@ -154,7 +147,7 @@ public class Principal {
 
 		String json = "";
 
-		BufferedReader br = new BufferedReader(new FileReader("problema_10x10_maze.json"));
+		BufferedReader br = new BufferedReader(new FileReader("problema_25x25_maze.json"));
 
 		String linea;
 		while ((linea = br.readLine()) != null) {
@@ -309,7 +302,7 @@ public class Principal {
 			ficheroSolucion.delete();
 			escribirFichero = new FileWriter("solution_" + filas + "X" + columnas + "_" + estrategia + ".txt", true);
 			pwriter = new PrintWriter(escribirFichero);
-			pwriter.print(estrategia + "\n");
+			pwriter.print("[id][cost,state,father_id,action,depth,h,value]" + "\n");
 
 			while (!solucion.empty()) {
 				nodo = solucion.pop();

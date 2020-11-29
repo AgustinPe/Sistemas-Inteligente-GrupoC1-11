@@ -1,4 +1,4 @@
-UNIFORM
+[id][cost,state,father_id,action,depth,h,value]
 Nodo [0][0.0,(0,0),None,None,0,18.0,0.0]
 Nodo [1][1.0,(0,1),0,E,1,17.0,1.0]
 Nodo [2][3.0,(1,1),1,S,2,16.0,3.0]

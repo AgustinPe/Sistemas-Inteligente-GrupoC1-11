@@ -16,10 +16,6 @@ public class DrawLab {
 		this.celdas = r.cells;
 		this.Columnas = r.cols;
 		this.Filas = r.rows;
-
-		StdDraw.setYscale(0, Filas + 2);
-		StdDraw.setXscale(0, Columnas + 2);
-
 		inicializar();
 		Paredes();
 
@@ -122,6 +118,9 @@ public class DrawLab {
 
 	// dibuja el laberinto
 	public void dibujar() {
+		
+		StdDraw.setYscale(0, Filas + 2);
+		StdDraw.setXscale(0, Columnas + 2);
 
 //        StdDraw.setPenColor(StdDraw.RED);
 //        StdDraw.filledCircle(Columnas + 0.5, Filas + 0.5, 0.375);
