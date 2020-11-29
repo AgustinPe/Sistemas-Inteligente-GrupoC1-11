@@ -52,6 +52,9 @@ public class Principal {
 					sucesores = importarSucesores(gson);
 					nombreJson = sucesores.getMAZE();
 					objeto = importarMaze(gson, nombreJson);
+					laberintoDibujado = new DrawLab(objeto);
+					StdDraw.show(0);
+					laberintoDibujado.dibujar();
 					Busqueda busquedaCaminoAnchura = new Busqueda(sucesores, objeto, laberinto);
 					solucion = busquedaCaminoAnchura.busqueda("BREADTH");
 					mostrarCamino(solucion, "BREADTH", objeto);
@@ -61,6 +64,9 @@ public class Principal {
 					sucesores = importarSucesores(gson);
 					nombreJson = sucesores.getMAZE();
 					objeto = importarMaze(gson, nombreJson);
+					laberintoDibujado = new DrawLab(objeto);
+					StdDraw.show(0);
+					laberintoDibujado.dibujar();
 					Busqueda busquedaCaminoProfundidad = new Busqueda(sucesores, objeto, laberinto);
 					solucion = busquedaCaminoProfundidad.busqueda("DEPTH");
 					mostrarCamino(solucion, "DEPTH", objeto);
@@ -70,6 +76,9 @@ public class Principal {
 					sucesores = importarSucesores(gson);
 					nombreJson = sucesores.getMAZE();
 					objeto = importarMaze(gson, nombreJson);
+					laberintoDibujado = new DrawLab(objeto);
+					StdDraw.show(0);
+					laberintoDibujado.dibujar();
 					Busqueda busquedaCaminoCostoUniforme = new Busqueda(sucesores, objeto, laberinto);
 					solucion = busquedaCaminoCostoUniforme.busqueda("UNIFORM");
 					mostrarCamino(solucion, "UNIFORM", objeto);
@@ -79,6 +88,9 @@ public class Principal {
 					sucesores = importarSucesores(gson);
 					nombreJson = sucesores.getMAZE();
 					objeto = importarMaze(gson, nombreJson);
+					laberintoDibujado = new DrawLab(objeto);
+					StdDraw.show(0);
+					laberintoDibujado.dibujar();
 					Busqueda busquedaCaminoA = new Busqueda(sucesores, objeto, laberinto);
 					solucion = busquedaCaminoA.busqueda("A");
 					mostrarCamino(solucion, "A", objeto);
@@ -88,6 +100,9 @@ public class Principal {
 					sucesores = importarSucesores(gson);
 					nombreJson = sucesores.getMAZE();
 					objeto = importarMaze(gson, nombreJson);
+					laberintoDibujado = new DrawLab(objeto);
+					StdDraw.show(0);
+					laberintoDibujado.dibujar();
 					Busqueda busquedaCaminoVoraz = new Busqueda(sucesores, objeto, laberinto);
 					solucion = busquedaCaminoVoraz.busqueda("GREEDY");
 					mostrarCamino(solucion, "GREEDY", objeto);
