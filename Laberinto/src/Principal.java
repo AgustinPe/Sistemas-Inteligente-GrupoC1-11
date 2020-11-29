@@ -56,6 +56,11 @@ public class Principal {
 					objeto = importarMaze(gson, nombreJson);
 					Busqueda busquedaCamino = new Busqueda(sucesores,objeto,laberinto);
 					solucion = busquedaCamino.busqueda("BREADTH");
+					
+					for (int i = 0; i < solucion.size(); i++) {
+						System.out.println(solucion.pop());
+					}
+
 					mostrarCamino(solucion, "BREADTH", objeto);
 
 					break;
@@ -242,7 +247,7 @@ public class Principal {
 
 		if (!semantica) {
 			
-			throw new ExcepcionSemantica("La semántica es incorrecta");	
+			throw new ExcepcionSemantica("La semï¿½ntica es incorrecta");	
 			
 		}
 
@@ -311,7 +316,7 @@ public class Principal {
 			
 			pwriter.close();//Mirar
 		} else {
-			System.out.println("No se ha encontrado una solución");
+			System.out.println("No se ha encontrado una soluciï¿½n");
 		}
 	}
 	

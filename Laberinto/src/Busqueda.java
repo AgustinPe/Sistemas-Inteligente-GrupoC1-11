@@ -14,7 +14,7 @@ public class Busqueda {
 	private int[] objetivo;
 	private int profundidadmax;
 	private Celda[][] laberinto;
-	private long contadorid = 1;
+	private long contadorId = 1;
 
 	public Busqueda() {
 	}
@@ -48,11 +48,9 @@ public class Busqueda {
 		h2 = Math.abs(objeto.getCols() - columnasImportado);
 		h = h1 + h2;
 		return h;
-
 	}
 
 	public Stack<Nodo> busqueda(String estrategia) {
-		int contador = 0;
 		Nodo nodo;
 		boolean solucion = false;
 		ArrayList<Nodo> nodosHijo = new ArrayList<Nodo>();
@@ -74,7 +72,7 @@ public class Busqueda {
 //					System.out.print(listaSucesores.get(i).getEstado()[0]+","+listaSucesores.get(i).getEstado()[1]+" - ");
 				}
 				System.out.println();
-				nodosHijo = CreaListaDeNodos(listaSucesores, nodo, estrategia, contador);
+				nodosHijo = CreaListaDeNodos(listaSucesores, nodo, estrategia);
 //				for(int i=0; i<nodosHijo.size(); i++) {
 //					System.out.println("Lista hijos"+nodosHijo.get(i));
 //				}
@@ -84,14 +82,16 @@ public class Busqueda {
 		} while (!this.frontera.estaVacia() && solucion == false);
 
 		if (solucion == true) {
+			for (int i = 0; i < visitados.size(); i++) {
+				System.out.println(visitados.get(i));
+			}
 			return crearCamino(nodo);
 		} else			
 			return null;
 
 	}
 
-	public ArrayList<Nodo> CreaListaDeNodos(ArrayList<Sucesor> listaSucesores, Nodo nodo, String estrategia,
-			int contador) {
+	public ArrayList<Nodo> CreaListaDeNodos(ArrayList<Sucesor> listaSucesores, Nodo nodo, String estrategia) {
 		ArrayList<Nodo> ListaNodos = new ArrayList<Nodo>();
 		Nodo nodoAux;
 		double value = 0;
@@ -100,7 +100,7 @@ public class Busqueda {
 		double h;
 
 		for (int i = 0; i < listaSucesores.size(); i++) {
-			contador++;
+			this.contadorId++;
 			costo = calcularCosto(listaSucesores.get(i), nodo);
 			prof = nodo.getProfundidad() + 1;
 			h = heuristica(listaSucesores.get(i).getEstado());
@@ -120,7 +120,7 @@ public class Busqueda {
 				if (estrategia == "A") {
 					value = h + costo;
 				}
-				nodoAux = new Nodo(contador, costo, listaSucesores.get(i).getEstado(), nodo.getId(),
+				nodoAux = new Nodo(this.contadorId, costo, listaSucesores.get(i).getEstado(), nodo.getId(),
 						listaSucesores.get(i).getAccion(), prof, h, value);
 				if (!pertenece(nodoAux.getId_estado())) {
 					ListaNodos.add(nodoAux);
@@ -133,12 +133,16 @@ public class Busqueda {
 	public Stack<Nodo> crearCamino(Nodo fin) {
 		Stack<Nodo> camino = new Stack<Nodo>();
 		camino.add(fin);
+//		System.out.println(fin);
 		Nodo actual = buscarPadre(fin.getId_padre());
-		System.out.println("Nodo padre="+" "+ buscarPadre(-1).toString());
+//		System.out.println("nodo actual fuera"+ actual);
+//		System.out.println("Nodo padre="+" "+ buscarPadre(-1));
+		
 		
 		while (actual.getId_padre() != -1) {
 			camino.add(actual);
 			actual = buscarPadre(actual.getId_padre());
+//			System.out.println("nodo actual bucle"+ actual);
 		}
 
 		return camino;

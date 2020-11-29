@@ -91,6 +91,8 @@ public class Nodo {
 			return "Nodo [" + id + "][" + costo + ",(" + id_estado[0] +"," + id_estado[1] + "),"
 					+ "None,None," + profundidad + "," + heuristica + ","
 					+ valor + "]";
+			
+			
 		}else {
 			return "Nodo [" + id + "][" + costo + ",(" + id_estado[0] +"," + id_estado[1] + "),"
 					+ id_padre +"," + accion + "," + profundidad + "," + heuristica + ","
