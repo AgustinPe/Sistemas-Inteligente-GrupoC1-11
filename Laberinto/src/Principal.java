@@ -128,7 +128,7 @@ public class Principal {
 		String jsonlaberinto = gson.toJson(exportarJson);
 
 		FileWriter exportarJson1 = new FileWriter(
-				"D:\\ProgramasDescargados\\eclipse\\eclipse-workspace\\Laberinto1910\\laberinto.json");
+				"C:\\Users\\elpel\\Desktop\\FullUniversidad\\PrimerCuatri\\Iso2\\Practicas\\PruebasGit\\Sistemas-Inteligente-GrupoC1-11\\Laberinto\\problema_10x10_maze.json");
 		exportarJson1.write(jsonlaberinto);
 		exportarJson1.flush();
 		exportarJson1.close();

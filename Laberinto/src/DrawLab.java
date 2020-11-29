@@ -17,8 +17,8 @@ public class DrawLab {
 		this.Columnas = r.cols;
 		this.Filas = r.rows;
 
-//		StdDraw.setYscale(0, Filas + 2);
-//		StdDraw.setXscale(0, Columnas + 2);
+		StdDraw.setYscale(0, Filas + 2);
+		StdDraw.setXscale(0, Columnas + 2);
 
 		inicializar();
 		Paredes();
