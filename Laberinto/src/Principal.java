@@ -75,10 +75,9 @@ public class Principal {
 					objeto = importarMaze(gson, nombreJson);
 					Busqueda busquedaCaminoCostoUniforme = new Busqueda(sucesores, objeto, laberinto);
 					solucion = busquedaCaminoCostoUniforme.busqueda("UNIFORM");
-					for (int i = 0; i < solucion.size(); i++) {
-						System.out.println(solucion.get(i));
-					}
-
+//					for (int i = 0; i < solucion.size(); i++) {
+//						System.out.println(solucion.get(i));
+//					}
 					mostrarCamino(solucion,"UNIFORM", objeto);
 
 					break;
