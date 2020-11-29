@@ -1,4 +1,5 @@
 import java.util.*;
+
 public class DrawLab {
 	private int Columnas;
 	private int Filas; // dimensi�n del laberinto
@@ -9,7 +10,6 @@ public class DrawLab {
 	TreeMap<String, CeldaJson> celdas;
 	private int coordenadaFila;
 	private int coordenadaColumna;
-	
 
 	public DrawLab(JsonToObject r) {
 
@@ -118,7 +118,7 @@ public class DrawLab {
 
 	// dibuja el laberinto
 	public void dibujar() {
-		
+
 		StdDraw.setYscale(0, Filas + 2);
 		StdDraw.setXscale(0, Columnas + 2);
 
@@ -159,4 +159,3 @@ public class DrawLab {
 	}
 
 }
-
