@@ -1,7 +1,7 @@
 import java.util.*;
 public class DrawLab {
 	private int Columnas;
-	private int Filas; // dimensión del laberinto
+	private int Filas; // dimensiï¿½n del laberinto
 	private boolean[][] norte; // existe pared hacia el norte de la casilla i,j
 	private boolean[][] este;
 	private boolean[][] sur;
@@ -17,8 +17,8 @@ public class DrawLab {
 		this.Columnas = r.cols;
 		this.Filas = r.rows;
 
-		StdDraw.setYscale(0, Filas + 2);
-		StdDraw.setXscale(0, Columnas + 2);
+//		StdDraw.setYscale(0, Filas + 2);
+//		StdDraw.setXscale(0, Columnas + 2);
 
 		inicializar();
 		Paredes();
@@ -27,7 +27,7 @@ public class DrawLab {
 
 	private void inicializar() {
 		// inicializar todas las paredes como presentes
-		// nótese que cada pared se almacena 2 veces
+		// nï¿½tese que cada pared se almacena 2 veces
 		norte = new boolean[Columnas + 2][Filas + 2];
 		este = new boolean[Columnas + 2][Filas + 2];
 		sur = new boolean[Columnas + 2][Filas + 2];
@@ -40,7 +40,7 @@ public class DrawLab {
 
 	}
 
-	// Metodo para sacar la posición de las celdas que tienen paredes a False.
+	// Metodo para sacar la posiciï¿½n de las celdas que tienen paredes a False.
 
 	public void Paredes() {
 
