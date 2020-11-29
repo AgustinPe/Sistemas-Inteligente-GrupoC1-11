@@ -14,12 +14,15 @@ public class Busqueda {
 	private int[] objetivo;
 	private int profundidadmax;
 	private Celda[][] laberinto;
-	private long contadorId = 1;
+	private long contadorId;
+	private double costo;
 
 	public Busqueda() {
 	}
 
 	public Busqueda(ImportarJsonSucesores sucesores, JsonToObject objeto, Celda[][] laberinto) {
+		this.contadorId = 1;
+		this.costo = 0;
 		this.posicionIni = new int[2];
 		this.objetivo = new int[2];
 		DrawLab cor = new DrawLab(objeto);
@@ -29,8 +32,6 @@ public class Busqueda {
 		cor.coordenadas(sucesores.getOBJETIVE());
 		this.objetivo[0] = cor.getCoordenadaFila();
 		this.objetivo[1] = cor.getCoordenadaColumna();
-		System.out.println(this.objetivo[0]);
-		System.out.println(this.objetivo[1]);
 		this.objeto = objeto;
 		this.nodoInicial = new Nodo(0, 0, this.posicionIni, -1, null, 0, heuristica(this.posicionIni), 0);
 		this.profundidadmax = 1000000;
@@ -86,12 +87,12 @@ public class Busqueda {
 		Nodo nodoAux;
 		double value = 0;
 		int prof;
-		double costo;
 		double h;
 
 		for (int i = 0; i < listaSucesores.size(); i++) {
 
-			costo = calcularCosto(listaSucesores.get(i), nodo);
+			this.costo = calcularCosto(listaSucesores.get(i), nodo);
+
 			prof = nodo.getProfundidad() + 1;
 			h = heuristica(listaSucesores.get(i).getEstado());
 			if (estrategia == "DEPTH") {
@@ -103,14 +104,15 @@ public class Busqueda {
 				if (estrategia == "GREEDY") {
 					value = h;
 				}
-				costo = nodo.getCosto() + listaSucesores.get(i).getCosto_move();
+				
+//				costo = nodo.getCosto() + listaSucesores.get(i).getCosto_move();
 				if (estrategia == "UNIFORM") {
-					value = costo;
+					value = this.costo;
 				}
 				if (estrategia == "A") {
-					value = h + costo;
+					value = h + this.costo;
 				}
-				nodoAux = new Nodo(this.contadorId++, costo, listaSucesores.get(i).getEstado(), nodo.getId(),
+				nodoAux = new Nodo(this.contadorId++, this.costo, listaSucesores.get(i).getEstado(), nodo.getId(),
 						listaSucesores.get(i).getAccion(), prof, h, value);
 				if (!pertenece(nodoAux.getId_estado())) {
 					ListaNodos.add(nodoAux);
@@ -194,11 +196,10 @@ public class Busqueda {
 
 	public double calcularCosto(Sucesor nodo, Nodo nodoPadre) {
 
-		double costo;
-		costo = nodoPadre.getCosto();
-		costo = costo + this.laberinto[nodo.getEstado()[0]][nodo.getEstado()[1]].getValue();
+		this.costo = nodoPadre.getCosto();
+		this.costo = this.costo + this.laberinto[nodo.getEstado()[0]][nodo.getEstado()[1]].getValue();
 
-		return costo;
+		return this.costo;
 	}
 
 	public double calcularValueInicial(String estrategia) {

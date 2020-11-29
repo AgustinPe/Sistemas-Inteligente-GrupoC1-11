@@ -54,13 +54,8 @@ public class Principal {
 					sucesores = importarSucesores(gson);
 					nombreJson = sucesores.getMAZE();
 					objeto = importarMaze(gson, nombreJson);
-					Busqueda busquedaCamino = new Busqueda(sucesores, objeto, laberinto);
-					solucion = busquedaCamino.busqueda("BREADTH");
-
-					for (int i = 0; i < solucion.size(); i++) {
-						System.out.println(solucion.get(i));
-					}
-
+					Busqueda busquedaCaminoAnchura = new Busqueda(sucesores, objeto, laberinto);
+					solucion = busquedaCaminoAnchura.busqueda("BREADTH");
 					mostrarCamino(solucion, "BREADTH", objeto);
 
 					break;
@@ -69,19 +64,25 @@ public class Principal {
 					sucesores = importarSucesores(gson);
 					nombreJson = sucesores.getMAZE();
 					objeto = importarMaze(gson, nombreJson);
-					Busqueda frontera = new Busqueda(sucesores, objeto, importarACeldas(objeto));
+					Busqueda busquedaCaminoProfundidad = new Busqueda(sucesores, objeto, laberinto);
+					solucion = busquedaCaminoProfundidad.busqueda("DEPTH");
+					mostrarCamino(solucion,"DEPTH", objeto);
 					break;
 
 				case 5:
+					sucesores = importarSucesores(gson);
+					nombreJson = sucesores.getMAZE();
+					objeto = importarMaze(gson, nombreJson);
+					Busqueda busquedaCaminoCostoUniforme = new Busqueda(sucesores, objeto, laberinto);
+					solucion = busquedaCaminoCostoUniforme.busqueda("UNIFORM");
+					for (int i = 0; i < solucion.size(); i++) {
+						System.out.println(solucion.get(i));
+					}
+
+					mostrarCamino(solucion,"UNIFORM", objeto);
+
 					break;
-//				case 5:
-//					ImportarJsonSucesores sucesoresAnchura = new ImportarJsonSucesores();
-//					sucesores = importarSucesores(gson);
-//					JsonToObject laberintoAnchura = new JsonToObject();
-//					Busqueda busquedaSolucion = new Busqueda(sucesoresAnchura, laberintoAnchura, laberinto);
-//					solucion = 
-//					
-//					break;
+
 				case 6:
 
 					break;
