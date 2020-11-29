@@ -22,7 +22,7 @@ public class Principal {
 			do {
 				System.out.println(
 						" 0. Salir \n 1. Crear y Exportar \n 2. Importar y Dibujar \n 3. Anchura \n 4. Profundidad Acotada"
-								+ "\n 5. Coste Uniforme \n 6. Voraz \n 7. A*");
+								+ "\n 5. Coste Uniforme \n 6. A* \n 7. Voraz");
 				eleccion = teclado.nextInt();
 				switch (eleccion) {
 				case 0:
@@ -40,28 +40,21 @@ public class Principal {
 					break;
 
 				case 2:
-
 					objeto = importar(gson);
 					importarACeldas(objeto);
 					laberintoDibujado = new DrawLab(objeto);
 					StdDraw.show(0);
 					laberintoDibujado.dibujar();
 					System.out.println("Ha sido importado y dibujado correctamente");
-
 					break;
 
-				case 3: // Anchura
+				case 3:
 					sucesores = importarSucesores(gson);
 					nombreJson = sucesores.getMAZE();
 					objeto = importarMaze(gson, nombreJson);
 					Busqueda busquedaCaminoAnchura = new Busqueda(sucesores, objeto, laberinto);
 					solucion = busquedaCaminoAnchura.busqueda("BREADTH");
 					mostrarCamino(solucion, "BREADTH", objeto);
-					
-//					for (int i = 0; i < solucion.size(); i++) {
-//						System.out.println(solucion.get(i));
-//					}
-
 					break;
 
 				case 4:
@@ -70,7 +63,7 @@ public class Principal {
 					objeto = importarMaze(gson, nombreJson);
 					Busqueda busquedaCaminoProfundidad = new Busqueda(sucesores, objeto, laberinto);
 					solucion = busquedaCaminoProfundidad.busqueda("DEPTH");
-					mostrarCamino(solucion,"DEPTH", objeto);
+					mostrarCamino(solucion, "DEPTH", objeto);
 					break;
 
 				case 5:
@@ -79,20 +72,25 @@ public class Principal {
 					objeto = importarMaze(gson, nombreJson);
 					Busqueda busquedaCaminoCostoUniforme = new Busqueda(sucesores, objeto, laberinto);
 					solucion = busquedaCaminoCostoUniforme.busqueda("UNIFORM");
-					mostrarCamino(solucion,"UNIFORM", objeto);
-
+					mostrarCamino(solucion, "UNIFORM", objeto);
 					break;
 
 				case 6:
-
+					sucesores = importarSucesores(gson);
+					nombreJson = sucesores.getMAZE();
+					objeto = importarMaze(gson, nombreJson);
+					Busqueda busquedaCaminoA = new Busqueda(sucesores, objeto, laberinto);
+					solucion = busquedaCaminoA.busqueda("A");
+					mostrarCamino(solucion, "A", objeto);
 					break;
 
 				case 7:
-
-					break;
-
-				case 8:
-
+					sucesores = importarSucesores(gson);
+					nombreJson = sucesores.getMAZE();
+					objeto = importarMaze(gson, nombreJson);
+					Busqueda busquedaCaminoVoraz = new Busqueda(sucesores, objeto, laberinto);
+					solucion = busquedaCaminoVoraz.busqueda("GREEDY");
+					mostrarCamino(solucion, "GREEDY", objeto);
 					break;
 
 				default:
@@ -108,9 +106,9 @@ public class Principal {
 			System.out.println("Ha ocurrido un error al crear el archivo Json");
 		}
 
-//		catch (Exception e) {
-//			System.out.println("Ocurrio un error inesperado" + e);
-//		}
+		catch (Exception e) {
+			System.out.println("Ocurrio un error inesperado" + e);
+		}
 	}
 
 	public static void crearExportar(Scanner teclado, Gson gson) throws IOException {
@@ -308,7 +306,7 @@ public class Principal {
 				value = nodo.getValor();
 				pwriter.print(nodo.toString() + "\n");
 			}
-			pwriter.close();// Mirar
+			pwriter.close();
 		} else {
 			System.out.println("No se ha encontrado una soluci�n");
 		}
