@@ -302,7 +302,7 @@ public class Principal {
 			ficheroSolucion.delete();
 			escribirFichero = new FileWriter("solution_" + filas + "X" + columnas + "_" + estrategia + ".txt", true);
 			pwriter = new PrintWriter(escribirFichero);
-			pwriter.print("[id][cost,state,father_id,action,depth,h,value]" + "\n");
+			pwriter.print("[id_nodo][costo,estado,id_nodo_padre,accion,profundidad,heurística,valor]" + "\n");
 
 			while (!solucion.empty()) {
 				nodo = solucion.pop();
