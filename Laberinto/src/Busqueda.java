@@ -20,6 +20,7 @@ public class Busqueda {
 	}
 
 	public Busqueda(ImportarJsonSucesores sucesores, JsonToObject objeto, Celda[][] laberinto) {
+		
 		this.contadorId = 1;
 		this.posicionIni = new int[2];
 		this.objetivo = new int[2];
@@ -51,7 +52,7 @@ public class Busqueda {
 		return h;
 	}
 
-	public ArrayList<Stack<Nodo>> busqueda(String estrategia) {
+	public ArrayList<Stack<Nodo>> busqueda(String estrategia) {		
 		Nodo nodo;
 		boolean solucion = false;
 		ArrayList<Nodo> nodosHijo = new ArrayList<Nodo>();
@@ -61,10 +62,10 @@ public class Busqueda {
 		this.frontera.insertar(this.nodoInicial);
 		do {
 			nodo = frontera.eliminar();
-
 			if (nodo.getId_estado()[0] == this.objetivo[0] && nodo.getId_estado()[1] == this.objetivo[1]) {
 				solucion = true;
 			} else if (nodo.getProfundidad() < profundidadmax && pertenece(nodo.getId_estado()) == false) {
+				
 				visitados.add(nodo);
 				listaSucesores = expandir_Nodo(nodo);
 				nodosHijo = CreaListaDeNodos(listaSucesores, nodo, estrategia);
@@ -72,7 +73,7 @@ public class Busqueda {
 			}
 		} while (!this.frontera.estaVacia() && solucion == false);
 
-		if (solucion == true) {
+		if (solucion == true) {			
 			return crearCamino(nodo);
 		} else
 			return null;

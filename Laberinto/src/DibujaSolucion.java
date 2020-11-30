@@ -23,8 +23,8 @@ public class DibujaSolucion {
 		this.camino = camino;
 		inicializar();
 		inicializarLab();
-		insetaValores();
-		Paredes();
+		insertarValores();
+		paredes();
 
 	}
 
@@ -60,7 +60,7 @@ public class DibujaSolucion {
 		}
 	}
 
-	public void insetaValores() {
+	public void insertarValores() {
 
 		for (Map.Entry<String, CeldaJson> entry : celdas.entrySet()) {
 			String key = entry.getKey();
@@ -83,7 +83,7 @@ public class DibujaSolucion {
 
 	// Metodo para sacar la posici�n de las celdas que tienen paredes a False.
 
-	public void Paredes() {
+	public void paredes() {
 
 		// x es columna
 		// y es fila
