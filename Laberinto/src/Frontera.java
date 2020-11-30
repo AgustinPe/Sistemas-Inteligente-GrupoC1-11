@@ -8,7 +8,7 @@ public class Frontera {
 	public Frontera() {
 		this.frontera = new PriorityQueue<Nodo>(new ComparadorNodos());
 	}
-	public Frontera(PriorityQueue<Nodo> frontera, PriorityQueue<Nodo> visitados) {
+	public Frontera(PriorityQueue<Nodo> frontera) {
 		this.frontera = frontera;
 	}
 	

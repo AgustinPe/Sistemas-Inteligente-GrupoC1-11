@@ -68,7 +68,7 @@ public class Busqueda {
 				
 				visitados.add(nodo);
 				listaSucesores = expandir_Nodo(nodo);
-				nodosHijo = CreaListaDeNodos(listaSucesores, nodo, estrategia);
+				nodosHijo = creaListaDeNodos(listaSucesores, nodo, estrategia);
 				this.frontera.insertarNodosHijo(nodosHijo);
 			}
 		} while (!this.frontera.estaVacia() && solucion == false);
@@ -80,7 +80,7 @@ public class Busqueda {
 
 	}
 
-	public ArrayList<Nodo> CreaListaDeNodos(ArrayList<Sucesor> listaSucesores, Nodo nodo, String estrategia) {
+	public ArrayList<Nodo> creaListaDeNodos(ArrayList<Sucesor> listaSucesores, Nodo nodo, String estrategia) {
 		ArrayList<Nodo> ListaNodos = new ArrayList<Nodo>();
 		Nodo nodoAux;
 		double value = 0;
