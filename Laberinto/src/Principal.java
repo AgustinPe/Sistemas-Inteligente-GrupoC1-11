@@ -17,9 +17,11 @@ public class Principal {
 			Celda[][] laberinto = importarACeldas(objeto);
 			DrawLab laberintoDibujado;
 			DibujaSolucion laberintoSolucion;
-			Stack<Nodo> solucion = new Stack<Nodo>();
+			ArrayList<Stack<Nodo>> soluciones = new ArrayList<Stack<Nodo>>();
 			String nombreJson;
-
+			Stack<Nodo> solucionDibujar = new Stack<Nodo>();
+			Stack<Nodo> solucion = new Stack<Nodo>();
+			
 			do {
 				System.out.println(
 						" 0. Salir \n 1. Crear y Exportar \n 2. Importar y Dibujar \n 3. Anchura \n 4. Profundidad Acotada"
@@ -51,11 +53,13 @@ public class Principal {
 					sucesores = importarSucesores(gson);
 					nombreJson = sucesores.getMAZE();
 					objeto = importarMaze(gson, nombreJson);
-					laberintoDibujado = new DrawLab(objeto);
-					laberintoDibujado.dibujar();
+//					laberintoDibujado = new DrawLab(objeto);
+//					laberintoDibujado.dibujar();
 					Busqueda busquedaCaminoAnchura = new Busqueda(sucesores, objeto, laberinto);
-					solucion = busquedaCaminoAnchura.busqueda("BREADTH");
-					laberintoSolucion = new DibujaSolucion(objeto, solucion);
+					soluciones = busquedaCaminoAnchura.busqueda("BREADTH");
+					solucionDibujar = soluciones.get(1);
+					solucion = soluciones.get(0);
+					laberintoSolucion = new DibujaSolucion(objeto, solucionDibujar);
 					laberintoSolucion.dibujar();
 					mostrarCamino(solucion, "BREADTH", objeto);
 					break;
@@ -67,7 +71,7 @@ public class Principal {
 					laberintoDibujado = new DrawLab(objeto);
 					laberintoDibujado.dibujar();
 					Busqueda busquedaCaminoProfundidad = new Busqueda(sucesores, objeto, laberinto);
-					solucion = busquedaCaminoProfundidad.busqueda("DEPTH");
+					solucion = busquedaCaminoProfundidad.busqueda("DEPTH").get(0);
 					laberintoSolucion = new DibujaSolucion(objeto, solucion);
 					laberintoSolucion.dibujar();
 					mostrarCamino(solucion, "DEPTH", objeto);
@@ -80,7 +84,7 @@ public class Principal {
 					laberintoDibujado = new DrawLab(objeto);
 					laberintoDibujado.dibujar();
 					Busqueda busquedaCaminoCostoUniforme = new Busqueda(sucesores, objeto, laberinto);
-					solucion = busquedaCaminoCostoUniforme.busqueda("UNIFORM");
+					solucion = busquedaCaminoCostoUniforme.busqueda("UNIFORM").get(0);
 					laberintoSolucion = new DibujaSolucion(objeto, solucion);
 					laberintoSolucion.dibujar();
 					mostrarCamino(solucion, "UNIFORM", objeto);
@@ -93,7 +97,7 @@ public class Principal {
 					laberintoDibujado = new DrawLab(objeto);
 					laberintoDibujado.dibujar();
 					Busqueda busquedaCaminoA = new Busqueda(sucesores, objeto, laberinto);
-					solucion = busquedaCaminoA.busqueda("A");
+					solucion = busquedaCaminoA.busqueda("A").get(0);
 					laberintoSolucion = new DibujaSolucion(objeto, solucion);
 					laberintoSolucion.dibujar();
 					mostrarCamino(solucion, "A", objeto);
@@ -106,7 +110,7 @@ public class Principal {
 					laberintoDibujado = new DrawLab(objeto);
 					laberintoDibujado.dibujar();
 					Busqueda busquedaCaminoVoraz = new Busqueda(sucesores, objeto, laberinto);
-					solucion = busquedaCaminoVoraz.busqueda("GREEDY");
+					solucion = busquedaCaminoVoraz.busqueda("GREEDY").get(0);
 					laberintoSolucion = new DibujaSolucion(objeto, solucion);
 					laberintoSolucion.dibujar();
 					mostrarCamino(solucion, "GREEDY", objeto);
@@ -125,9 +129,9 @@ public class Principal {
 			System.out.println("Ha ocurrido un error al crear el archivo Json");
 		}
 
-		catch (Exception e) {
-			System.out.println("Ocurrio un error inesperado" + e);
-		}
+//		catch (Exception e) {
+//			System.out.println("Ocurrio un error inesperado" + e);
+//		}
 	}
 
 	public static void crearExportar(Scanner teclado, Gson gson) throws IOException {
@@ -194,7 +198,7 @@ public class Principal {
 
 		String jsonSucesores = "";
 
-		BufferedReader bri = new BufferedReader(new FileReader("problema_10x10.json"));
+		BufferedReader bri = new BufferedReader(new FileReader("problema_50x25.json"));
 
 		String linea;
 		while ((linea = bri.readLine()) != null) {

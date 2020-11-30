@@ -51,7 +51,7 @@ public class Busqueda {
 		return h;
 	}
 
-	public Stack<Nodo> busqueda(String estrategia) {
+	public ArrayList<Stack<Nodo>> busqueda(String estrategia) {
 		Nodo nodo;
 		boolean solucion = false;
 		ArrayList<Nodo> nodosHijo = new ArrayList<Nodo>();
@@ -118,16 +118,23 @@ public class Busqueda {
 
 	}
 
-	public Stack<Nodo> crearCamino(Nodo fin) {
+	public ArrayList<Stack<Nodo>> crearCamino(Nodo fin) {
 		Stack<Nodo> camino = new Stack<Nodo>();
+		Stack<Nodo> caminoDibujar = new Stack<Nodo>();
+		ArrayList<Stack<Nodo>> caminos = new ArrayList<Stack<Nodo>>();
 		camino.add(fin);
+		caminoDibujar.add(fin);
 		Nodo actual = buscarPadre(fin.getId_padre());
 		while (actual.getId_padre() != -1) {
 			camino.add(actual);
+			caminoDibujar.add(actual);
 			actual = buscarPadre(actual.getId_padre());
 		}
 		camino.add(actual);
-		return camino;
+		caminoDibujar.add(actual);
+		caminos.add(camino);
+		caminos.add(caminoDibujar);
+		return caminos;
 	}
 
 	public Nodo buscarPadre(long idPadre) {
