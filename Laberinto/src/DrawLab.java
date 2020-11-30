@@ -165,19 +165,6 @@ public class DrawLab {
 //	      StdDraw.setPenColor(StdDraw.RED);
 //	      StdDraw.filledCircle(Columnas + 0.5, Filas + 0.5, 0.375);
 //	      StdDraw.filledCircle(1.5, 1.5, 0.375);
-		StdDraw.setPenColor(StdDraw.BLACK);
-		for (int x = 1; x <= Columnas; x++) { // mas 1 por que dejo margen en la ventana
-			for (int y = 1; y <= Filas; y++) {
-				if (sur[x][y])
-					StdDraw.line(x, y, x + 1, y);
-				if (norte[x][y])
-					StdDraw.line(x, y + 1, x + 1, y + 1);
-				if (oeste[x][y])
-					StdDraw.line(x, y, x, y + 1);
-				if (este[x][y])
-					StdDraw.line(x + 1, y, x + 1, y + 1);
-			}
-		}
 		for (int x = 0; x < Filas; x++) {
 			for (int y = 0; y < Columnas; y++) {
 				if (laberinto[x][y].getValue() == 1) {
@@ -191,8 +178,21 @@ public class DrawLab {
 					StdDraw.filledSquare( y + 1.5, (Filas-(x+1)) + 1.5, 0.5);
 				}
 			}
-
+			
 			}
+		StdDraw.setPenColor(StdDraw.BLACK);
+		for (int x = 1; x <= Columnas; x++) { // mas 1 por que dejo margen en la ventana
+			for (int y = 1; y <= Filas; y++) {
+				if (sur[x][y])
+					StdDraw.line(x, y, x + 1, y);
+				if (norte[x][y])
+					StdDraw.line(x, y + 1, x + 1, y + 1);
+				if (oeste[x][y])
+					StdDraw.line(x, y, x, y + 1);
+				if (este[x][y])
+					StdDraw.line(x + 1, y, x + 1, y + 1);
+			}
+		}
 		
 		StdDraw.show(0);
 	}
