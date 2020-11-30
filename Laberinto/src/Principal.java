@@ -54,8 +54,6 @@ public class Principal {
 					nombreJson = sucesores.getMAZE();
 					objeto = importarMaze(gson, nombreJson);
 					laberinto = importarACeldas(objeto);
-//					laberintoDibujado = new DrawLab(objeto);
-//					laberintoDibujado.dibujar();
 					Busqueda busquedaCaminoAnchura = new Busqueda(sucesores, objeto, laberinto);
 					soluciones = busquedaCaminoAnchura.busqueda("BREADTH");
 					solucionDibujar = soluciones.get(0);
@@ -142,9 +140,9 @@ public class Principal {
 			System.out.println("Ha ocurrido un error al crear el archivo Json");
 		}
 
-//		catch (Exception e) {
-//			System.out.println("Ocurrio un error inesperado" + e);
-//		}
+		catch (Exception e) {
+			System.out.println("Ocurrio un error inesperado" + e);
+		}
 	}
 
 	public static void crearExportar(Scanner teclado, Gson gson) throws IOException {
