@@ -9,7 +9,16 @@ public class Nodo {
 	private double valor;
 	private String accion;
 
-	
+	public Nodo() {
+		this.id = 0;
+		this.costo = 0;
+		this.id_estado = new int[2];
+		this.id_padre = 0;
+		this.accion = null;
+		this.profundidad = 0;
+		this.heuristica = 0;
+		this.valor = 0;
+	}
 	public Nodo(long id, double costo, int[] id_estado, long id_padre, String accion, int profundidad, double heuristica, double valor) {
 		this.id = id;
 		this.costo = costo;

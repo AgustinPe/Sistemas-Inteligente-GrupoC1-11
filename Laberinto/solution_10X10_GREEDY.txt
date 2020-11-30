@@ -1,4 +1,4 @@
-GREEDY
+[id_nodo][costo,estado,id_nodo_padre,accion,profundidad,heurística,valor]
 Nodo [0][0.0,(0,0),None,None,0,18.0,18.0]
 Nodo [1][1.0,(0,1),0,E,1,17.0,17.0]
 Nodo [2][3.0,(1,1),1,S,2,16.0,16.0]

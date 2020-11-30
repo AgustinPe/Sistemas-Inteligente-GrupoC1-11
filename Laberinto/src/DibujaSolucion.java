@@ -1,6 +1,8 @@
-import java.util.*;
+import java.util.Map;
+import java.util.Stack;
+import java.util.TreeMap;
 
-public class DrawLab {
+public class DibujaSolucion {
 	private int Columnas;
 	private int Filas; // dimensi�n del laberinto
 	private boolean[][] norte; // existe pared hacia el norte de la casilla i,j
@@ -11,12 +13,14 @@ public class DrawLab {
 	private int coordenadaFila;
 	private int coordenadaColumna;
 	private Celda[][] laberinto;
+	private Stack<Nodo> camino;
 
-	public DrawLab(JsonToObject r) {
+	public DibujaSolucion(JsonToObject r, Stack<Nodo> camino) {
 
 		this.celdas = r.cells;
 		this.Columnas = r.cols;
 		this.Filas = r.rows;
+		this.camino = camino;
 		inicializar();
 		inicializarLab();
 		insetaValores();
@@ -37,6 +41,7 @@ public class DrawLab {
 			}
 		}
 	}
+
 	private void inicializarLab() {
 		laberinto = new Celda[Filas][Columnas];
 		for (int i = 0; i < Filas; i++) {
@@ -54,10 +59,10 @@ public class DrawLab {
 			}
 		}
 	}
-	
+
 	public void insetaValores() {
-		
-		for (Map.Entry<String, CeldaJson> entry : celdas.entrySet()) {	
+
+		for (Map.Entry<String, CeldaJson> entry : celdas.entrySet()) {
 			String key = entry.getKey();
 			coordenadas(key);
 			int filasImportado = this.coordenadaFila;
@@ -96,7 +101,7 @@ public class DrawLab {
 			coordenadas(key);
 			int coordenadaF = this.coordenadaFila;
 			int corColumna = this.coordenadaColumna + 1;
-			
+
 			int corFila = Filas - coordenadaF;// por que borra empezando desde abajo y desde la izquierda
 
 			if (vecinos[0] == true && corFila < Filas) { // Celda norte
@@ -158,7 +163,8 @@ public class DrawLab {
 
 	// dibuja el laberinto
 	public void dibujar() {
-
+		Nodo nodo = new Nodo();
+		int[] estado = new int[2];
 		StdDraw.setYscale(0, Filas + 2);
 		StdDraw.setXscale(0, Columnas + 2);
 
@@ -182,21 +188,29 @@ public class DrawLab {
 			for (int y = 0; y < Columnas; y++) {
 				if (laberinto[x][y].getValue() == 1) {
 					StdDraw.setPenColor(StdDraw.ORANGE);
-					StdDraw.filledSquare(y + 1.5 , (Filas-(x+1)) + 1.5 , 0.5);
+					StdDraw.filledSquare(y + 1.5, (Filas - (x + 1)) + 1.5, 0.5);
 				} else if (laberinto[x][y].getValue() == 2) {
 					StdDraw.setPenColor(StdDraw.GREEN);
-					StdDraw.filledSquare(y + 1.5, (Filas-(x+1)) + 1.5, 0.5);
+					StdDraw.filledSquare(y + 1.5, (Filas - (x + 1)) + 1.5, 0.5);
 				} else if (laberinto[x][y].getValue() == 3) {
 					StdDraw.setPenColor(StdDraw.BLUE);
-					StdDraw.filledSquare( y + 1.5, (Filas-(x+1)) + 1.5, 0.5);
+					StdDraw.filledSquare(y + 1.5, (Filas - (x + 1)) + 1.5, 0.5);
 				}
 			}
 
-			}
-		
+		}
+
+		do {
+			nodo = this.camino.pop();
+			estado[0]=nodo.getId_estado()[0];
+			estado[1]=nodo.getId_estado()[1];
+			StdDraw.setPenColor(StdDraw.RED);
+			StdDraw.filledSquare(estado[1] + 1.5, (Filas - (estado[0] + 1)) + 1.5, 0.5);
+			StdDraw.show(0);
+		} while(!this.camino.isEmpty());
 		StdDraw.show(0);
 	}
-	
+
 	public int getCoordenadaFila() {
 		return coordenadaFila;
 	}

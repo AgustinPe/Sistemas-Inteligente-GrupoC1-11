@@ -1,22 +1,22 @@
 public class CeldaJson {
 	String posicion;
-	private int value;
+	private float value;
     private boolean [] neighbors;
 
     public CeldaJson() {
     }
 
-    public CeldaJson(int value, boolean[] neighbors) {
+    public CeldaJson(float value, boolean[] neighbors) {
     	this.posicion="";
         this.value = value;
         this.neighbors = neighbors;
     }
 
-    public int getValue() {
+    public float getValue() {
         return value;
     }
     
-    public void setValue(int value) {
+    public void setValue(float value) {
         this.value = value;
     }
 
