@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Stack;
 import java.util.TreeMap;
@@ -14,13 +15,25 @@ public class DibujaSolucion {
 	private int coordenadaColumna;
 	private Celda[][] laberinto;
 	private Stack<Nodo> camino;
+	private Stack<Nodo> arbolInterior;
+	private Frontera frontera;
+	private ArrayList<Nodo> fronteraParaVerde;
+	private Frontera fronteraParaAzul;
+	private  ArrayList<Nodo> visitados;
 
-	public DibujaSolucion(JsonToObject r, Stack<Nodo> camino) {
+	public DibujaSolucion(JsonToObject r, Stack<Nodo> camino, Frontera frontera,ArrayList<Nodo> visitados) {
 
 		this.celdas = r.cells;
 		this.Columnas = r.cols;
 		this.Filas = r.rows;
 		this.camino = camino;
+		this.frontera = frontera;
+		this.visitados = visitados;
+		fronteraParaVerde = new ArrayList<Nodo>();
+		fronteraParaAzul = new Frontera();
+		arbolInterior = new Stack<Nodo>();
+		copiaFrontera(frontera);
+		arbolInterior();
 		inicializar();
 		inicializarLab();
 		insertarValores();
@@ -80,7 +93,36 @@ public class DibujaSolucion {
 		}
 
 	}
-
+	public void copiaFrontera(Frontera frontera) {
+		Nodo nodo = new Nodo();
+		while(!frontera.estaVacia()) {
+			nodo = frontera.eliminar();
+			fronteraParaVerde.add(nodo);
+			fronteraParaAzul.insertar(nodo);
+		}
+	}
+	
+	
+	public void arbolInterior() {
+		for(int i=0; i < visitados.size(); i++) {
+				if(!pertenece(visitados.get(i))) {
+					arbolInterior.push(visitados.get(i));
+				}
+			}
+		}	
+	
+	
+	public boolean pertenece(Nodo nodo) {
+		Nodo nodof = new Nodo();
+		boolean pertenece = false;
+		for(int i=0; i<fronteraParaVerde.size();i++){
+			if(nodo.getId() == fronteraParaVerde.get(i).getId()) {
+				pertenece=true;
+				i = fronteraParaVerde.size();
+			}
+		}
+		return pertenece;	
+	}
 	// Metodo para sacar la posici�n de las celdas que tienen paredes a False.
 
 	public void paredes() {
@@ -160,41 +202,63 @@ public class DibujaSolucion {
 			}
 		}
 	}
+	
 
 	// dibuja el laberinto
 	public void dibujar() {
 		Nodo nodo = new Nodo();
+		Nodo nodof = new Nodo();
+		Nodo nodoArbol = new Nodo();
 		int[] estado = new int[2];
+		int[] estadof = new int[2];
+		int[] estadoArbol = new int[2];
 		StdDraw.setYscale(0, Filas + 2);
 		StdDraw.setXscale(0, Columnas + 2);
+	
 
-//	      StdDraw.setPenColor(StdDraw.RED);
-//	      StdDraw.filledCircle(Columnas + 0.5, Filas + 0.5, 0.375);
-//	      StdDraw.filledCircle(1.5, 1.5, 0.375);
 		for (int x = 0; x < Filas; x++) {
 			for (int y = 0; y < Columnas; y++) {
 				if (laberinto[x][y].getValue() == 1) {
 					StdDraw.setPenColor(StdDraw.ORANGE);
 					StdDraw.filledSquare(y + 1.5, (Filas - (x + 1)) + 1.5, 0.5);
 				} else if (laberinto[x][y].getValue() == 2) {
-					StdDraw.setPenColor(StdDraw.GREEN);
+					StdDraw.setPenColor(StdDraw.LIGHT_GRAY);
 					StdDraw.filledSquare(y + 1.5, (Filas - (x + 1)) + 1.5, 0.5);
 				} else if (laberinto[x][y].getValue() == 3) {
-					StdDraw.setPenColor(StdDraw.BLUE);
+					StdDraw.setPenColor(StdDraw.BOOK_LIGHT_BLUE);
 					StdDraw.filledSquare(y + 1.5, (Filas - (x + 1)) + 1.5, 0.5);
 				}
 			}
 
 		}
 
-		do {
+		
+		while(!this.fronteraParaAzul.estaVacia()) {
+			nodof = this.fronteraParaAzul.eliminar();
+			estadof[0]=nodof.getId_estado()[0];
+			estadof[1]=nodof.getId_estado()[1];
+			StdDraw.setPenColor(StdDraw.BLUE);
+			StdDraw.filledSquare(estadof[1] + 1.5, (Filas - (estadof[0] + 1)) + 1.5, 0.5);
+			StdDraw.show(0);
+		} 
+		
+		while(!this.arbolInterior.isEmpty()) {
+			nodoArbol = this.arbolInterior.pop();
+			estadoArbol[0]=nodoArbol.getId_estado()[0];
+			estadoArbol[1]=nodoArbol.getId_estado()[1];
+			StdDraw.setPenColor(StdDraw.GREEN);
+			StdDraw.filledSquare(estadoArbol[1] + 1.5, (Filas - (estadoArbol[0] + 1)) + 1.5, 0.5);
+			StdDraw.show(0);
+		
+		} 
+		 while(!this.camino.isEmpty()) {
 			nodo = this.camino.pop();
 			estado[0]=nodo.getId_estado()[0];
 			estado[1]=nodo.getId_estado()[1];
 			StdDraw.setPenColor(StdDraw.RED);
 			StdDraw.filledSquare(estado[1] + 1.5, (Filas - (estado[0] + 1)) + 1.5, 0.5);
 			StdDraw.show(0);
-		} while(!this.camino.isEmpty());
+		}
 		
 		StdDraw.setPenColor(StdDraw.BLACK);
 		for (int x = 1; x <= Columnas; x++) { // mas 1 por que dejo margen en la ventana

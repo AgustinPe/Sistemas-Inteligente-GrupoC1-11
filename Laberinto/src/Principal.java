@@ -35,7 +35,6 @@ public class Principal {
 					crearExportar(teclado, gson);
 					System.out.println("Ha sido exportado en la ruta indicada");
 					objeto = importar(gson);
-					importarACeldas(objeto);
 					laberintoDibujado = new DrawLab(objeto);
 					laberintoDibujado.dibujar();
 
@@ -43,7 +42,6 @@ public class Principal {
 
 				case 2:
 					objeto = importar(gson);
-					importarACeldas(objeto);
 					laberintoDibujado = new DrawLab(objeto);
 					laberintoDibujado.dibujar();
 					System.out.println("Ha sido importado y dibujado correctamente");
@@ -58,7 +56,7 @@ public class Principal {
 					soluciones = busquedaCaminoAnchura.busqueda("BREADTH");
 					solucionDibujar = soluciones.get(0);
 					solucion = soluciones.get(1);
-					laberintoSolucion = new DibujaSolucion(objeto, solucionDibujar);
+					laberintoSolucion = new DibujaSolucion(objeto, solucionDibujar,busquedaCaminoAnchura.getFrontera(),busquedaCaminoAnchura.getVisitados());
 					laberintoSolucion.dibujar();
 					mostrarCamino(solucion, "BREADTH", objeto);
 					break;
@@ -74,7 +72,7 @@ public class Principal {
 					soluciones = busquedaCaminoProfundidad.busqueda("DEPTH");
 					solucionDibujar = soluciones.get(0);
 					solucion = soluciones.get(1);
-					laberintoSolucion = new DibujaSolucion(objeto, solucionDibujar);
+					laberintoSolucion = new DibujaSolucion(objeto, solucionDibujar,busquedaCaminoProfundidad.getFrontera(),busquedaCaminoProfundidad.getVisitados());
 					laberintoSolucion.dibujar();
 					mostrarCamino(solucion, "DEPTH", objeto);
 					break;
@@ -90,7 +88,7 @@ public class Principal {
 					soluciones = busquedaCaminoCostoUniforme.busqueda("UNIFORM");
 					solucionDibujar = soluciones.get(0);
 					solucion = soluciones.get(1);
-					laberintoSolucion = new DibujaSolucion(objeto, solucionDibujar);
+					laberintoSolucion = new DibujaSolucion(objeto, solucionDibujar,busquedaCaminoCostoUniforme.getFrontera(),busquedaCaminoCostoUniforme.getVisitados());
 					laberintoSolucion.dibujar();
 					mostrarCamino(solucion, "UNIFORM", objeto);
 					break;
@@ -106,7 +104,7 @@ public class Principal {
 					soluciones = busquedaCaminoA.busqueda("A");
 					solucionDibujar = soluciones.get(0);
 					solucion = soluciones.get(1);
-					laberintoSolucion = new DibujaSolucion(objeto, solucionDibujar);
+					laberintoSolucion = new DibujaSolucion(objeto, solucionDibujar,busquedaCaminoA.getFrontera(),busquedaCaminoA.getVisitados());
 					laberintoSolucion.dibujar();
 					mostrarCamino(solucion, "A", objeto);
 					break;
@@ -122,7 +120,7 @@ public class Principal {
 					soluciones = busquedaCaminoVoraz.busqueda("GREEDY");
 					solucionDibujar = soluciones.get(0);
 					solucion = soluciones.get(1);
-					laberintoSolucion = new DibujaSolucion(objeto, solucionDibujar);
+					laberintoSolucion = new DibujaSolucion(objeto, solucionDibujar,busquedaCaminoVoraz.getFrontera(),busquedaCaminoVoraz.getVisitados());
 					laberintoSolucion.dibujar();
 					mostrarCamino(solucion, "GREEDY", objeto);
 					break;
@@ -209,7 +207,7 @@ public class Principal {
 
 		String jsonSucesores = "";
 
-		BufferedReader bri = new BufferedReader(new FileReader("problema_50x25.json"));
+		BufferedReader bri = new BufferedReader(new FileReader("problema_25x25.json"));
 
 		String linea;
 		while ((linea = bri.readLine()) != null) {
