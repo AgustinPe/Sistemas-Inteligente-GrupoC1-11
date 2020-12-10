@@ -138,9 +138,9 @@ public class Principal {
 			System.out.println("Ha ocurrido un error al crear el archivo Json");
 		}
 
-		catch (Exception e) {
-			System.out.println("Ocurrio un error inesperado" + e);
-		}
+//		catch (Exception e) {
+//			System.out.println("Ocurrio un error inesperado" + e);
+//		}
 	}
 
 	public static void crearExportar(Scanner teclado, Gson gson) throws IOException {
@@ -171,7 +171,7 @@ public class Principal {
 
 		String json = "";
 
-		BufferedReader br = new BufferedReader(new FileReader("problema_50x25_maze.json"));
+		BufferedReader br = new BufferedReader(new FileReader("problema_50x25.json"));
 
 		String linea;
 		while ((linea = br.readLine()) != null) {
@@ -207,7 +207,7 @@ public class Principal {
 
 		String jsonSucesores = "";
 
-		BufferedReader bri = new BufferedReader(new FileReader("problema_25x25.json"));
+		BufferedReader bri = new BufferedReader(new FileReader("p0.json"));
 
 		String linea;
 		while ((linea = bri.readLine()) != null) {

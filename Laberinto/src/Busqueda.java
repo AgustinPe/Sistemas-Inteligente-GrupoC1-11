@@ -1,3 +1,4 @@
+
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Map;
@@ -5,7 +6,7 @@ import java.util.PriorityQueue;
 import java.util.Stack;
 
 public class Busqueda {
-
+	
 	private ArrayList<Nodo> visitados;
 	private Frontera frontera;
 	private int[] posicionIni;
@@ -202,9 +203,10 @@ public class Busqueda {
 
 		double costo = 0;
 		costo = nodoPadre.getCosto();
-		costo = costo + this.laberinto[nodo.getEstado()[0]][nodo.getEstado()[1]].getValue();
+		double costoBueno =0;
+		costoBueno = costo + this.laberinto[nodo.getEstado()[0]][nodo.getEstado()[1]].getValue();
 
-		return costo;
+		return costoBueno;
 	}
 
 	public double calcularValueInicial(String estrategia) {
