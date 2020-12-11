@@ -91,6 +91,7 @@ public class Busqueda {
 
 		for (int i = 0; i < listaSucesores.size(); i++) {
 			costo = nodo.getCosto() + laberinto[nodo.getId_estado()[0]][nodo.getId_estado()[1]].getValue()
+			//costo = nodo.getCosto() + laberinto[listaSucesores.get(i).getEstado()[0]][listaSucesores.get(i).getEstado()[1]].getValue()
 					+ listaSucesores.get(i).getCosto_move();
 			prof = nodo.getProfundidad() + 1;
 			h = heuristica(listaSucesores.get(i).getEstado());

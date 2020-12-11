@@ -207,7 +207,7 @@ public class Principal {
 
 		String jsonSucesores = "";
 
-		BufferedReader bri = new BufferedReader(new FileReader("p0.json"));
+		BufferedReader bri = new BufferedReader(new FileReader("problema_50x50.json"));
 
 		String linea;
 		while ((linea = bri.readLine()) != null) {
